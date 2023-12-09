@@ -16,7 +16,7 @@ const createWord = async (req, res) => {
     sentence,
     pronunciation,
     audio,
-    wordlist,
+    wordlist_id,
   } = req.body;
 
   let emptyFields = []; // validating the form inputs
@@ -49,8 +49,8 @@ const createWord = async (req, res) => {
     emptyFields.push("audio");
   }
 
-  if (!wordlist) {
-    emptyFields.push("wordlist");
+  if (!wordlist_id) {
+    emptyFields.push("wordlist_id");
   }
 
   if (emptyFields.length > 0) {
@@ -69,7 +69,7 @@ const createWord = async (req, res) => {
       sentence,
       pronunciation,
       audio,
-      wordlist,
+      wordlist_id,
     });
 
     // this returns the response that the word was created
@@ -80,7 +80,91 @@ const createWord = async (req, res) => {
   }
 };
 
+const getWord = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such word" });
+  }
+
+  const word = await Word.findById(id);
+
+  if (!word) {
+    // have to return or else the rest of the code will be run
+    return res.status(404).json({ error: "No such word" });
+  }
+
+  res.status(200).json(word);
+};
+
+const updateWord = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such word" });
+  }
+
+  const word = await Word.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body, // spreading the properties of the body into this object, that is what the three dots are
+    }
+  );
+
+  if (!word) {
+    return res.status(404).json({ error: "No such word" });
+  }
+
+  // the returned word is the version before the update, so it will be updated in the db, but the 'word' json object will look not updated
+  res.status(200).json(word);
+};
+
+const deleteWord = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such word" });
+  }
+
+  // _id is the property name in MongoDB
+  const word = await Word.findOneAndDelete({ _id: id });
+
+  if (!word) {
+    return res.status(404).json({ error: "No such word" });
+  }
+
+  res.status(200).json(word);
+};
+
 module.exports = {
   getWords,
   createWord,
+  getWord,
+  updateWord,
+  deleteWord,
+};
+
+const getWordlistWords = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such wordlist" });
+  }
+
+  // _id is the property name in MongoDB
+  const words = await Word.find({ wordlist_id: id }).sort({ createdAt: -1 }); // sorting in descending order
+
+  if (!words) {
+    return res.status(404).json({ error: "Wordlist has no words" });
+  }
+
+  res.status(200).json(words);
+};
+
+module.exports = {
+  getWords,
+  createWord,
+  getWord,
+  updateWord,
+  deleteWord,
+  getWordlistWords,
 };

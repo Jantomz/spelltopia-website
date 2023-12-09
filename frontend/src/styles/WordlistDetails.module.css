@@ -1,0 +1,24 @@
+:root {
+  --primary: #d62246;
+  --secondary: #0c6291;
+}
+
+.wordlistDetails {
+  padding: 2em;
+  background-color: #fff;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  border-radius: 0.2em;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  font-size: 1.4em;
+  font-weight: 500;
+  color: var(--secondary);
+}
+
+.link {
+  text-decoration: none;
+}

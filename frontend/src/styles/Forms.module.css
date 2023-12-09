@@ -1,0 +1,59 @@
+:root {
+  --primary: #d62246;
+  --secondary: #0c6291;
+}
+
+.signup {
+}
+
+.sign {
+  display: flex;
+  flex-direction: column;
+  max-width: 30%;
+  justify-content: center;
+  margin: auto;
+}
+
+.sign button {
+  padding: 1em 2em;
+  border: none;
+  border-radius: 5px;
+  background-color: #0c6291;
+  color: #fff;
+  font-family: "Rubik";
+  font-weight: 500;
+  margin: 3em;
+  cursor: pointer;
+}
+
+.sign button:active {
+  background-color: #004e79;
+}
+
+.sign h3 {
+  font-size: 3em;
+}
+
+.sign label {
+  font-size: 1em;
+  padding: 1em 0em;
+}
+
+.sign input {
+  padding: 0.8em 0.2em;
+  border: none;
+  border-bottom: 2px solid var(--secondary);
+  background-color: transparent;
+}
+
+.sign input:focus {
+  outline: none;
+}
+
+.error {
+  padding: 1em;
+  background-color: rgba(255, 145, 145, 0.464);
+  border: 2px solid var(--primary);
+  border-radius: 4px;
+  color: var(--primary);
+}

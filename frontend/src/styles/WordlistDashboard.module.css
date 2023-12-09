@@ -1,0 +1,13 @@
+.words {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 2em;
+}
+
+.words form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 1em;
+}

@@ -32,7 +32,7 @@ const wordSchema = new Schema(
       type: String,
       required: true,
     },
-    wordlist: {
+    wordlist_id: {
       type: String,
       required: true,
     },

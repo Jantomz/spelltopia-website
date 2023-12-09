@@ -1,0 +1,102 @@
+:root {
+  --primary: #d62246;
+  --secondary: #0c6291;
+}
+
+.word {
+  padding: 0px 2em;
+  background-color: #fff;
+  max-width: 800px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+  font-family: "Rubik";
+}
+
+.materialSymbolsOutlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.word h4,
+input {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.word .title {
+  font-size: 2em;
+  font-weight: 600;
+  margin: 20px 0px 0px 0px;
+}
+
+.word span {
+  padding: 0px 20px;
+}
+
+.word .info {
+  font-weight: 200;
+}
+
+.word .hbox {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.word .hbox .info {
+  font-size: 1.5em;
+  margin: 20px 0px 0px 0px;
+}
+
+.word .inputTitle {
+  font-size: 2em;
+  font-weight: 600;
+  margin: 20px 0px 0px 0px;
+  height: 40px;
+}
+
+.word .inputTitleError {
+  font-size: 2em;
+  font-weight: 600;
+  margin: 20px 0px 0px 0px;
+  border-bottom: 2px solid var(--primary);
+  background-color: rgba(255, 65, 65, 0.067);
+  height: 40px;
+}
+
+.word textarea {
+  border: none;
+  border-radius: 5px;
+  resize: none;
+  height: 20px;
+}
+
+.word textarea:focus {
+  outline: none;
+  border-bottom: 2px solid var(--secondary);
+}
+
+.word .inputInfo {
+  font-weight: 200;
+}
+
+.word .inputInfoError {
+  font-weight: 200;
+  border-bottom: 2px solid var(--primary);
+  background-color: rgba(255, 65, 65, 0.067);
+}
+
+.word textarea {
+  margin: 1em 0px;
+}
+
+.add {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.add i {
+  color: #008e3d;
+  font-size: 50px;
+  cursor: pointer;
+}

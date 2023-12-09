@@ -5,6 +5,8 @@ const express = require("express");
 const cors = require("cors");
 
 const wordRoutes = require("./routes/words");
+const wordlistRoutes = require("./routes/wordlists");
+const userRoutes = require("./routes/user");
 
 const PORT = process.env.PORT || 3001;
 
@@ -15,6 +17,10 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/words", wordRoutes);
+
+app.use("/api/wordlists", wordlistRoutes);
+
+app.use("/api/user", userRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
