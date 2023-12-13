@@ -8,10 +8,22 @@ const wordlistSchema = new Schema(
       type: String,
       required: true,
     },
-    // user_id: {
-    //   type: String,
-    //   required: true,
-    // },
+    owner: {
+      type: String,
+      required: true,
+    },
+    contributor: {
+      type: Array,
+      required: false,
+    },
+    user: {
+      type: Array,
+      required: false,
+    },
+    visibility: {
+      type: String,
+      required: true,
+    },
   }, // this is a second property object, showing the timestamps of created and updated
   { timestamps: true }
 );

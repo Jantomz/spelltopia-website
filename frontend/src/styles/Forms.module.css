@@ -56,4 +56,5 @@
   border: 2px solid var(--primary);
   border-radius: 4px;
   color: var(--primary);
+  margin-bottom: 2em;
 }

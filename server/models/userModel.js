@@ -21,7 +21,11 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    require: true,
+    required: true,
+  },
+  type: {
+    type: String,
+    required: true,
   },
 });
 
@@ -51,6 +55,8 @@ userSchema.statics.signup = async function (
     throw Error("Email already in use");
   }
 
+  const type = "user";
+
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
@@ -59,6 +65,7 @@ userSchema.statics.signup = async function (
     lastName,
     email,
     password: hash,
+    type,
   });
 
   return user;

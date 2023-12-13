@@ -1,12 +1,16 @@
 import { useParams } from "react-router-dom";
 import styles from "../../styles/WordDetails.module.css";
+import styleForm from "../../styles/Forms.module.css";
 
 import { useWordsContext } from "../../hooks/useWordsContext";
 
 import { useState } from "react";
 
+import { useAuthContext } from "../../hooks/useAuthContext";
+
 export default function WordForm() {
   const { dispatch } = useWordsContext();
+  const { user } = useAuthContext();
 
   const [title, setTitle] = useState("");
   const [pronunciation, setPronunciation] = useState("");
@@ -21,6 +25,12 @@ export default function WordForm() {
 
   const handleClick = async () => {
     const wordlist_id = id;
+
+    if (!user) {
+      setError("You must be logged in");
+      return;
+    }
+
     const word = {
       title,
       partOfSpeech,
@@ -37,6 +47,7 @@ export default function WordForm() {
       body: JSON.stringify(word),
       headers: {
         "Content-Type": "application/json", // makes the content type specified as json
+        Authorization: `Bearer ${user.token}`,
       },
     });
 
@@ -69,115 +80,118 @@ export default function WordForm() {
   };
 
   return (
-    <form className={styles.word}>
-      <div className={styles.add} onClick={handleClick}>
-        <i className="material-symbols-outlined">add_circle</i>
-      </div>
-      <textarea
-        type="text"
-        placeholder="word"
-        value={title}
-        onChange={(e) => {
-          setTitle(e.target.value);
-          const index = emptyFields.indexOf("title");
-          removeEmptyField(index);
-        }}
-        className={
-          emptyFields.includes("title")
-            ? styles.inputTitleError
-            : styles.inputTitle
-        } // giving dynamic classname based on if the empty field array includes this part
-      ></textarea>
-      <textarea
-        type="text"
-        placeholder="part of speech"
-        value={partOfSpeech}
-        onChange={(e) => {
-          setPartOfSpeech(e.target.value);
-          const index = emptyFields.indexOf("partOfSpeech");
-          removeEmptyField(index);
-        }}
-        className={
-          emptyFields.includes("partOfSpeech")
-            ? styles.inputInfoError
-            : styles.inputInfo
-        }
-      ></textarea>
-      <textarea
-        type="text"
-        placeholder="pronunciation"
-        value={pronunciation}
-        onChange={(e) => {
-          setPronunciation(e.target.value);
-          const index = emptyFields.indexOf("pronunciation");
-          removeEmptyField(index);
-        }}
-        className={
-          emptyFields.includes("pronunciation")
-            ? styles.inputInfoError
-            : styles.inputInfo
-        }
-      ></textarea>
-      <textarea
-        type="text"
-        placeholder="definition"
-        value={definition}
-        onChange={(e) => {
-          setDefinition(e.target.value);
-          const index = emptyFields.indexOf("definition");
-          removeEmptyField(index);
-        }}
-        className={
-          emptyFields.includes("definition")
-            ? styles.inputInfoError
-            : styles.inputInfo
-        }
-      ></textarea>
-      <textarea
-        type="text"
-        placeholder="etymology"
-        value={etymology}
-        onChange={(e) => {
-          setEtymology(e.target.value);
-          const index = emptyFields.indexOf("etymology");
-          removeEmptyField(index);
-        }}
-        className={
-          emptyFields.includes("etymology")
-            ? styles.inputInfoError
-            : styles.inputInfo
-        }
-      ></textarea>
-      <textarea
-        type="text"
-        placeholder="sentence"
-        value={sentence}
-        onChange={(e) => {
-          setSentence(e.target.value);
-          const index = emptyFields.indexOf("sentence");
-          removeEmptyField(index);
-        }}
-        className={
-          emptyFields.includes("sentence")
-            ? styles.inputInfoError
-            : styles.inputInfo
-        }
-      ></textarea>
-      <textarea
-        type="text"
-        placeholder="audio link"
-        value={audio}
-        onChange={(e) => {
-          setAudio(e.target.value);
-          const index = emptyFields.indexOf("audio");
-          removeEmptyField(index);
-        }}
-        className={
-          emptyFields.includes("audio")
-            ? styles.inputInfoError
-            : styles.inputInfo
-        }
-      ></textarea>
-    </form>
+    <div className={styles.word}>
+      <form>
+        <div className={styles.add} onClick={handleClick}>
+          <i className="material-symbols-outlined">add_circle</i>
+        </div>
+        <textarea
+          type="text"
+          placeholder="word"
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+            const index = emptyFields.indexOf("title");
+            removeEmptyField(index);
+          }}
+          className={
+            emptyFields.includes("title")
+              ? styles.inputTitleError
+              : styles.inputTitle
+          } // giving dynamic classname based on if the empty field array includes this part
+        ></textarea>
+        <textarea
+          type="text"
+          placeholder="part of speech"
+          value={partOfSpeech}
+          onChange={(e) => {
+            setPartOfSpeech(e.target.value);
+            const index = emptyFields.indexOf("partOfSpeech");
+            removeEmptyField(index);
+          }}
+          className={
+            emptyFields.includes("partOfSpeech")
+              ? styles.inputInfoError
+              : styles.inputInfo
+          }
+        ></textarea>
+        <textarea
+          type="text"
+          placeholder="pronunciation"
+          value={pronunciation}
+          onChange={(e) => {
+            setPronunciation(e.target.value);
+            const index = emptyFields.indexOf("pronunciation");
+            removeEmptyField(index);
+          }}
+          className={
+            emptyFields.includes("pronunciation")
+              ? styles.inputInfoError
+              : styles.inputInfo
+          }
+        ></textarea>
+        <textarea
+          type="text"
+          placeholder="definition"
+          value={definition}
+          onChange={(e) => {
+            setDefinition(e.target.value);
+            const index = emptyFields.indexOf("definition");
+            removeEmptyField(index);
+          }}
+          className={
+            emptyFields.includes("definition")
+              ? styles.inputInfoError
+              : styles.inputInfo
+          }
+        ></textarea>
+        <textarea
+          type="text"
+          placeholder="etymology"
+          value={etymology}
+          onChange={(e) => {
+            setEtymology(e.target.value);
+            const index = emptyFields.indexOf("etymology");
+            removeEmptyField(index);
+          }}
+          className={
+            emptyFields.includes("etymology")
+              ? styles.inputInfoError
+              : styles.inputInfo
+          }
+        ></textarea>
+        <textarea
+          type="text"
+          placeholder="sentence"
+          value={sentence}
+          onChange={(e) => {
+            setSentence(e.target.value);
+            const index = emptyFields.indexOf("sentence");
+            removeEmptyField(index);
+          }}
+          className={
+            emptyFields.includes("sentence")
+              ? styles.inputInfoError
+              : styles.inputInfo
+          }
+        ></textarea>
+        <textarea
+          type="text"
+          placeholder="audio link"
+          value={audio}
+          onChange={(e) => {
+            setAudio(e.target.value);
+            const index = emptyFields.indexOf("audio");
+            removeEmptyField(index);
+          }}
+          className={
+            emptyFields.includes("audio")
+              ? styles.inputInfoError
+              : styles.inputInfo
+          }
+        ></textarea>
+      </form>
+      {error && <div className={styleForm.error}>{error}</div>}
+    </div>
   );
 }

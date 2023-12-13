@@ -28,3 +28,13 @@ nav .link {
   margin: 0em 1em;
   border-radius: 4px;
 }
+
+.logout {
+  padding: 1em;
+  border: none;
+  background-color: var(--primary);
+  color: #fff;
+  margin: 0em 1em;
+  border-radius: 4px;
+  cursor: pointer;
+}

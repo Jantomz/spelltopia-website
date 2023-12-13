@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const User = require("../models/userModel");
 
 const jwt = require("jsonwebtoken");
@@ -16,8 +17,12 @@ const loginUser = async (req, res) => {
 
     // create a token
     const token = createToken(user._id);
+    const firstName = user.firstName;
+    const lastName = user.lastName;
+    const type = user.type;
+    const _id = user._id;
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ _id, firstName, lastName, email, type, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -32,11 +37,26 @@ const signupUser = async (req, res) => {
 
     // create a token
     const token = createToken(user._id);
+    const type = user.type;
+    const _id = user._id;
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ _id, firstName, lastName, email, type, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-module.exports = { loginUser, signupUser };
+const getUser = async (req, res) => {
+  const { email } = req.params;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    // have to return or else the rest of the code will be run
+    return res.status(404).json({ error: "No such user" });
+  }
+
+  res.status(200).json(user);
+};
+
+module.exports = { loginUser, signupUser, getUser };

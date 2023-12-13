@@ -12,6 +12,10 @@ export const wordsReducer = (state, action) => {
       return {
         words: [action.payload, ...state.words],
       };
+    case "DELETE_WORD":
+      return {
+        words: state.words.filter((w) => w._id !== action.payload._id),
+      };
     default:
       return state;
   }

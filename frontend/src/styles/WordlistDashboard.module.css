@@ -11,3 +11,17 @@
   gap: 5px;
   padding: 1em;
 }
+
+li {
+  list-style-type: none; /* Remove bullets */
+  padding: 0.4em; /* Remove padding */
+  margin: 0; /* Remove margins */
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+i {
+  color: red;
+  cursor: pointer;
+}

@@ -19,12 +19,11 @@ export const AuthContextProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-
+    const user = JSON.parse(localStorage.getItem("user")); // the local storage is a json, we are making it into an object
     if (user) {
       dispatch({ type: "LOGIN", payload: user });
     }
-  }, []);
+  }, []); // firing a function when the component renders
 
   console.log("AuthContext state: ", state);
 

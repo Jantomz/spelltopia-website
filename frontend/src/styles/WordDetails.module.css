@@ -11,40 +11,43 @@
   font-family: "Rubik";
 }
 
-.materialSymbolsOutlined {
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-}
-
 .word h4,
-input {
+.word input {
   display: flex;
   justify-content: start;
   align-items: center;
 }
 
-.word .title {
+.title {
   font-size: 2em;
   font-weight: 600;
   margin: 20px 0px 0px 0px;
+  display: flex;
+  align-items: center;
 }
 
 .word span {
   padding: 0px 20px;
 }
 
-.word .info {
+.info {
   font-weight: 200;
 }
 
-.word .hbox {
-  display: flex;
-  align-items: center;
-  gap: 1em;
+.word i {
+  color: var(--primary);
+  cursor: pointer;
 }
 
-.word .hbox .info {
-  font-size: 1.5em;
-  margin: 20px 0px 0px 0px;
+.hbox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hbox .info {
+  font-size: 0.8em;
+  margin: 0em 0.8em;
 }
 
 .word .inputTitle {
@@ -68,6 +71,7 @@ input {
   border-radius: 5px;
   resize: none;
   height: 20px;
+  margin: 1em 0px;
 }
 
 .word textarea:focus {
@@ -83,10 +87,6 @@ input {
   font-weight: 200;
   border-bottom: 2px solid var(--primary);
   background-color: rgba(255, 65, 65, 0.067);
-}
-
-.word textarea {
-  margin: 1em 0px;
 }
 
 .add {

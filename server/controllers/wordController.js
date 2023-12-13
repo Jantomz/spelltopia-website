@@ -135,14 +135,6 @@ const deleteWord = async (req, res) => {
   res.status(200).json(word);
 };
 
-module.exports = {
-  getWords,
-  createWord,
-  getWord,
-  updateWord,
-  deleteWord,
-};
-
 const getWordlistWords = async (req, res) => {
   const { id } = req.params;
 

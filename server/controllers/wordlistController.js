@@ -2,14 +2,29 @@ const mongoose = require("mongoose");
 
 const Wordlist = require("../models/wordlistModel");
 const Word = require("../models/wordModel");
+var json = {};
 
 const getWordlists = async (req, res) => {
-  const wordlists = await Wordlist.find({}).sort({ createdAt: -1 }); // sorting in descending order
-  res.status(200).json(wordlists);
+  const user = req.user.email;
+
+  json.assigned = await Wordlist.find({
+    user,
+  }).sort({
+    createdAt: -1,
+  }); // sorting in descending order
+
+  json.owned = await Wordlist.find({ owner: user }).sort({
+    createdAt: -1,
+  });
+
+  json.contributed = await Wordlist.find({ contributor: user }).sort({
+    createdAt: -1,
+  });
+  res.status(200).json(json);
 };
 
 const createWordlist = async (req, res) => {
-  const { title } = req.body;
+  const { title, owner } = req.body;
 
   let emptyFields = []; // validating the form inputs
 
@@ -27,6 +42,8 @@ const createWordlist = async (req, res) => {
     // wordlist.create() is asynchronous, it is calling the collection and using a method to create a document, the response we are promised is the new document that was created along with its ID
     const wordlist = await Wordlist.create({
       title,
+      owner,
+      visibility: "Private",
     });
 
     // this returns the response that the word was created
@@ -64,7 +81,49 @@ const deleteWordlist = async (req, res) => {
   // _id is the property name in MongoDB
   const wordlist = await Wordlist.findOneAndDelete({ _id: id });
 
-  const words = await Word.deleteMany({ wordlist_id: id });
+  await Word.deleteMany({ wordlist_id: id });
+
+  if (!wordlist) {
+    return res.status(404).json({ error: "No such wordlist" });
+  }
+
+  res.status(200).json(wordlist);
+};
+
+const addUser = async (req, res) => {
+  const { id } = req.params;
+  const { email } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such wordlist" });
+  }
+
+  // _id is the property name in MongoDB
+  const wordlist = await Wordlist.findOneAndUpdate(
+    { _id: id },
+    { $push: { user: email } }
+  );
+
+  if (!wordlist) {
+    return res.status(404).json({ error: "No such wordlist" });
+  }
+
+  res.status(200).json(wordlist);
+};
+
+const removeUser = async (req, res) => {
+  const { id } = req.params;
+  const { email } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such wordlist" });
+  }
+
+  // _id is the property name in MongoDB
+  const wordlist = await Wordlist.findOneAndUpdate(
+    { _id: id },
+    { $pull: { user: email } }
+  );
 
   if (!wordlist) {
     return res.status(404).json({ error: "No such wordlist" });
@@ -78,4 +137,6 @@ module.exports = {
   getWordlists,
   createWordlist,
   deleteWordlist,
+  addUser,
+  removeUser,
 };

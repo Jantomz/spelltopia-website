@@ -24,3 +24,19 @@
 4. [ ] As a contributor, I want to be able to prevent publishing of my wordlists until they are done so that I can publish when the wordlist is ready
 5. [ ] As a contributor, I want to be able to edit my published wordlists by putting them into editing mode so that I can make changes to the wordlist if needed
 6. [ ] As a contributor, I want to have a profile with a biography and wordlists I have created so that I can be in the spelltopia community
+
+# To Do:
+
+1. Make the admin able to add wordlists
+2. Make the contributor be able to edit wordlists
+3. Make the user be able to view and practice wordlists and add to their list of wordlists that they use
+4. Assign users to a wordlist
+
+# Where I ended off:
+
+1. [x] I am trying to show the wordlist details on the wordlist dashboard, I can maybe just make one api call instead of nested ones
+2. [x] Make the wordlist details a one time fetch call and then make a wordlists context to have the array of objects of the wordlists
+3. Make sure a user can only be placed as one type of user on a wordlist
+4. Make the self-test
+5. Make it so that everytime they leave a wordlist, the global context gets reset
+6. Make an upload feature for the wordlist so that it can be uploaded

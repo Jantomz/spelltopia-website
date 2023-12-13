@@ -19,3 +19,14 @@ body {
 .error {
   color: var(--primary);
 }
+
+hr {
+  background-color: var(--secondary);
+  width: 20%;
+  padding: 2px;
+  margin: 2em 0em;
+}
+
+.container {
+  padding: 4em;
+}
