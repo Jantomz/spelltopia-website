@@ -1,13 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useWordsContext } from "../../hooks/useWordsContext";
+import { useWordlistsContext } from "../../hooks/useWordlistsContext";
 
 export default function UserWordlistTool() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { words } = useWordsContext();
+  const { wordlist } = useWordlistsContext();
 
   const handleClick = () => {
-    navigate(`/practice/${id}/${words[0]._id}`);
+    navigate(`/practice/${id}`);
+    const count = localStorage.getItem(`${id}-count`);
+
+    if (!count || count == wordlist.words.length) {
+      localStorage.setItem(`${id}-count`, 1);
+    }
   };
 
   return (

@@ -11,15 +11,15 @@ export default function AdminDashboardTools() {
   const navigate = useNavigate();
 
   const handleCreate = async () => {
-    const wordlist = {
-      title: "New Wordlist",
-      owner: user.email,
-    };
-
     if (!user) {
       setError("You must be logged in");
       return;
     }
+
+    const wordlist = {
+      title: "New Wordlist",
+      owner: user.email,
+    };
 
     const response = await fetch("http://localhost:4000/api/wordlists", {
       method: "POST",

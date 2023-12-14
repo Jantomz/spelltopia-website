@@ -2,14 +2,13 @@ import { useParams } from "react-router-dom";
 import styles from "../../styles/WordDetails.module.css";
 import styleForm from "../../styles/Forms.module.css";
 
-import { useWordsContext } from "../../hooks/useWordsContext";
-
 import { useState } from "react";
 
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useWordlistsContext } from "../../hooks/useWordlistsContext";
 
 export default function WordForm() {
-  const { dispatch } = useWordsContext();
+  const { dispatch } = useWordlistsContext();
   const { user } = useAuthContext();
 
   const [title, setTitle] = useState("");
@@ -24,8 +23,6 @@ export default function WordForm() {
   const { id } = useParams();
 
   const handleClick = async () => {
-    const wordlist_id = id;
-
     if (!user) {
       setError("You must be logged in");
       return;
@@ -38,18 +35,20 @@ export default function WordForm() {
       pronunciation,
       etymology,
       sentence,
-      wordlist_id,
       audio,
     };
 
-    const response = await fetch("http://localhost:4000/api/words", {
-      method: "POST",
-      body: JSON.stringify(word),
-      headers: {
-        "Content-Type": "application/json", // makes the content type specified as json
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      `http://localhost:4000/api/wordlists/${id}/words`,
+      {
+        method: "POST",
+        body: JSON.stringify(word),
+        headers: {
+          "Content-Type": "application/json", // makes the content type specified as json
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     const json = await response.json(); // when we make the post request, our backend also sends back the response as a json
 
@@ -69,7 +68,7 @@ export default function WordForm() {
       setEtymology("");
       setAudio("");
       setEmptyFields([]);
-      dispatch({ type: "CREATE_WORD", payload: json });
+      dispatch({ type: "SET_WORDLIST", payload: json });
     }
   };
 

@@ -38,7 +38,7 @@ function App() {
               !user ? (
                 <Navigate to="/login" />
               ) : user.type !== "user" ? (
-                <WordlistEdit />
+                <WordlistEdit /> // change to edit mode later
               ) : (
                 <Navigate to="/" />
               )
@@ -53,7 +53,7 @@ function App() {
             element={user ? <Navigate to="/" /> : <Signup />}
           ></Route>
           <Route
-            path="/practice/:id/:word_id"
+            path="/practice/:id"
             element={user ? <Practice /> : <Navigate to="/login" />}
           ></Route>
         </Routes>

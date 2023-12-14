@@ -40,3 +40,9 @@
 4. Make the self-test
 5. Make it so that everytime they leave a wordlist, the global context gets reset
 6. Make an upload feature for the wordlist so that it can be uploaded
+7. Make validation for backend, so you can't put multiple users as different roles on a wordlist or put a user more than once
+
+# Just one thing:
+
+1. Fix the frontend with new wordlist dispatchs for each field of the wordlist since I have new routes
+2. Fix the backend user routes to include getting a user

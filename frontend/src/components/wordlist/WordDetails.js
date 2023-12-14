@@ -1,23 +1,21 @@
 import styles from "../../styles/WordDetails.module.css";
-import { useWordsContext } from "../../hooks/useWordsContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useWordlistsContext } from "../../hooks/useWordlistsContext";
+import { useParams } from "react-router-dom";
 
 export default function WordDetails({ word }) {
   const audio = new Audio(word.audio);
-  const { dispatch } = useWordsContext();
   const { user } = useAuthContext();
+  const { id } = useParams();
+  const { dispatch } = useWordlistsContext();
 
   const playAudio = () => {
     audio.play();
   };
 
   const handleDelete = async () => {
-    if (!user) {
-      return;
-    }
-
     const response = await fetch(
-      `http://localhost:4000/api/words/${word._id}`,
+      `http://localhost:4000/api/wordlists/${id}/words/${word._id}`,
       {
         method: "DELETE",
         headers: {
@@ -25,10 +23,11 @@ export default function WordDetails({ word }) {
         },
       }
     );
-
     const json = await response.json();
 
-    dispatch({ type: "DELETE_WORD", payload: json });
+    if (response.ok) {
+      dispatch({ type: "SET_WORDLIST", payload: json });
+    }
   };
 
   return (

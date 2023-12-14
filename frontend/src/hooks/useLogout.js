@@ -1,19 +1,24 @@
 import { useAuthContext } from "./useAuthContext";
 import { useWordlistsContext } from "./useWordlistsContext";
-import { useWordsContext } from "./useWordsContext";
 
 export const useLogout = () => {
   const { dispatch } = useAuthContext();
-  const { dispatch: wordsDispatch } = useWordsContext();
-  const { dispatch: wordlistsDispatch } = useWordlistsContext();
+  const { dispatch: wordlistsDispatch, wordlists } = useWordlistsContext();
 
   const logout = () => {
-    localStorage.removeItem("user");
+    localStorage.clear();
 
     dispatch({ type: "LOGOUT" });
 
-    wordsDispatch({ type: "SET_WORDS", payload: null });
-    wordlistsDispatch({ type: "SET_WORDLISTS", payload: null });
+    wordlistsDispatch({
+      type: "SET_WORDLISTS",
+      payload: null,
+    });
+
+    wordlistsDispatch({
+      type: "SET_WORDLIST",
+      payload: null,
+    });
   };
   return { logout };
 };

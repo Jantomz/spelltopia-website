@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import WordPractice from "../components/wordlist/WordPractice";
 import { useParams } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useWordlistsContext } from "../hooks/useWordlistsContext";
 
 export default function Practice() {
-  const { id, word_id } = useParams();
-  const [words, setWords] = useState([]);
+  const { id } = useParams();
+  const { wordlist, dispatch } = useWordlistsContext();
   const { user } = useAuthContext();
 
   useEffect(() => {
-    const fetchWords = async () => {
+    const fetchWordlist = async () => {
       const response = await fetch(
-        `http://localhost:4000/api/words/list/${id}`,
+        `http://localhost:4000/api/wordlists/${id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -19,22 +20,24 @@ export default function Practice() {
         }
       ); // previously had http://localhost:4000 for the request, but now the package.json holds the automatic redirection to our backend server using proxy, removes cors error in development
       const json = await response.json(); // parses the response json into objects
+
       if (response.ok) {
-        setWords(json);
-        console.log(words);
+        dispatch({ type: "SET_WORDLIST", payload: json });
       }
     };
 
     if (user) {
-      fetchWords();
+      fetchWordlist();
     }
-  }, [id]);
+  }, []);
 
-  return (
-    <div className="container">
-      {words.map((word) => (
-        <WordPractice key={word._id} word={word} />
-      ))}
-    </div>
-  );
+  if (wordlist) {
+    return (
+      <div className="container">
+        <WordPractice key={wordlist.words} words={wordlist.words} />
+      </div>
+    );
+  } else {
+    return <div>Loading</div>;
+  }
 }
