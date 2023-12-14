@@ -74,7 +74,7 @@ export default function WordForm() {
   };
 
   const removeEmptyField = (index) => {
-    if (index != -1) {
+    if (index !== -1) {
       emptyFields.splice(index, 1);
     }
   };

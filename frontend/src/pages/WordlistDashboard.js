@@ -1,4 +1,4 @@
-import { useEffect, useState, Navigate } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "../styles/WordlistDashboard.module.css";
 
@@ -6,7 +6,7 @@ import WordDetails from "../components/wordlist/WordDetails";
 import { useParams } from "react-router-dom";
 
 import { useAuthContext } from "../hooks/useAuthContext";
-import ContributorWordlistTools from "../components/admin/ContributorWordlistTools";
+import ContributorWordlistTools from "../components/user/ContributorWordlistTools";
 import UserWordlistTool from "../components/user/UserWordlistTools";
 import { useWordsContext } from "../hooks/useWordsContext";
 
@@ -52,9 +52,8 @@ export default function WordlistDashboard() {
         const owner = json.owner;
 
         setTitle(title);
-        setContributorNames(...contributorNames, contributors);
-        setUserNames(...userNames, users);
-
+        setContributorNames(contributors);
+        setUserNames(users);
         setOwnerName(owner);
       }
     };
@@ -63,7 +62,7 @@ export default function WordlistDashboard() {
       fetchWords(); // calling the function we just made, and we can use the await keyword here instead
       fetchWordlistDetails();
     }
-  }, [id, user]); // needs dispatch dependency
+  }, [id, user, dispatch]); // needs dispatch dependency
 
   return (
     <div className="container">
@@ -73,7 +72,7 @@ export default function WordlistDashboard() {
         <div>
           <h4>Contributors:</h4>
           <ul>
-            {contributorNames == ""
+            {contributorNames.length === 0
               ? "None"
               : contributorNames.map((user) => <li key={user}>{user}</li>)}
           </ul>
@@ -81,7 +80,7 @@ export default function WordlistDashboard() {
         <div>
           <h4>Assigned Users:</h4>
           <ul>
-            {userNames == ""
+            {userNames.length === 0
               ? "None"
               : userNames.map((user) => <li key={user}>{user}</li>)}
           </ul>

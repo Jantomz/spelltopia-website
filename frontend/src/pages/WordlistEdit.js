@@ -90,7 +90,7 @@ export default function WordlistEdit() {
       fetchWords(); // calling the function we just made, and we can use the await keyword here instead
       fetchWordlistDetails();
     }
-  }, [id]); // needs dispatch dependency
+  }, [id, user, dispatch]); // needs dispatch dependency
 
   const handleDelete = async () => {
     if (!user) {
@@ -120,7 +120,7 @@ export default function WordlistEdit() {
         <div>
           <h4>Contributors:</h4>
           <ul>
-            {contributorNames == ""
+            {contributorNames.length === 0
               ? "None"
               : contributorNames.map((user) => <li key={user}>{user}</li>)}
           </ul>
@@ -128,7 +128,7 @@ export default function WordlistEdit() {
         <div>
           <h4>Assigned Users:</h4>
           <ul>
-            {userNames == ""
+            {userNames.length === 0
               ? "None"
               : userNames.map((user) => (
                   <WordlistUserList key={user} email={user} />

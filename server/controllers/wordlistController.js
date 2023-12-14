@@ -101,7 +101,8 @@ const addUser = async (req, res) => {
   // _id is the property name in MongoDB
   const wordlist = await Wordlist.findOneAndUpdate(
     { _id: id },
-    { $push: { user: email } }
+    { $push: { user: email } },
+    { new: true }
   );
 
   if (!wordlist) {
@@ -122,7 +123,8 @@ const removeUser = async (req, res) => {
   // _id is the property name in MongoDB
   const wordlist = await Wordlist.findOneAndUpdate(
     { _id: id },
-    { $pull: { user: email } }
+    { $pull: { user: email } },
+    { new: true }
   );
 
   if (!wordlist) {

@@ -28,7 +28,7 @@ export default function Practice() {
     if (user) {
       fetchWords();
     }
-  }, []);
+  }, [id]);
 
   return (
     <div className="container">

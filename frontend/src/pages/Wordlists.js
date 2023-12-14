@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -33,7 +33,7 @@ export default function Wordlists() {
     if (user) {
       fetchWordlists(); // calling the function we just made, and we can use the await keyword here instead
     }
-  }, []); // needs dispatch dependency
+  }, [dispatch, user]); // needs dispatch dependency
 
   return (
     <div className={styles.wordlists}>

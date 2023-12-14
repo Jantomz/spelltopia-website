@@ -17,7 +17,7 @@ function App() {
   // makes sure that we check if the user is logged in, only if the user is logged in can be
   useEffect(() => {
     setLoggedIn(Boolean(user));
-  }, []);
+  }, [user]);
 
   return (
     <BrowserRouter>

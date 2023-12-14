@@ -2,10 +2,12 @@ import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 import "../../styles/WordlistDashboard.module.css";
+import { useWordlistsContext } from "../../hooks/useWordlistsContext";
 
 export default function WordlistUserList({ email }) {
   const { id } = useParams();
   const { user } = useAuthContext();
+  const { dispatch } = useWordlistsContext();
 
   const handleDelete = async () => {
     const response = await fetch(
@@ -19,6 +21,12 @@ export default function WordlistUserList({ email }) {
         },
       }
     );
+
+    const json = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: "SET_WORDLIST_USERS", payload: json });
+    }
   };
 
   return (

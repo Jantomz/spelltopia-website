@@ -33,10 +33,6 @@ export const wordlistsReducer = (state, action) => {
       return {
         users: action.payload,
       };
-    case "REMOVE_WORDLIST_USER":
-      return {
-        users: state.users.filter((u) => u !== action.payload),
-      };
     case "ADD_WORDLIST_USER":
       return {
         users: [action.payload, ...state.users],
@@ -44,10 +40,6 @@ export const wordlistsReducer = (state, action) => {
     case "SET_WORDLIST_CONTRIBUTORS":
       return {
         contributors: action.payload,
-      };
-    case "REMOVE_WORDLIST_CONTRIBUTOR":
-      return {
-        contributors: state.contributors.filter((u) => u !== action.payload),
       };
     case "ADD_WORDLIST_CONTRIBUTOR":
       return {
