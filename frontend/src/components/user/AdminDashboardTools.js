@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useWordlistsContext } from "../../hooks/useWordlistsContext";
 import { useNavigate } from "react-router-dom";
+import styles from "../../styles/Tools.module.css";
 
 export default function AdminDashboardTools() {
   const { user } = useAuthContext();
@@ -47,9 +48,11 @@ export default function AdminDashboardTools() {
   };
 
   return (
-    <div>
-      <button>Users</button>
-      <button onClick={handleCreate}>Create Wordlist</button>
+    <div className={styles.hbox}>
+      <button className={styles.smallBtn}>Users</button>
+      <button onClick={handleCreate} className={styles.smallBtn}>
+        Create Wordlist
+      </button>
       {error && <div>{error}</div>}
     </div>
   );

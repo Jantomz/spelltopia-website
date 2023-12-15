@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import styles from "../styles/WordlistDashboard.module.css";
 
@@ -6,10 +6,8 @@ import WordDetails from "../components/wordlist/WordDetails";
 import { useParams } from "react-router-dom";
 
 import { useAuthContext } from "../hooks/useAuthContext";
-import ContributorWordlistTools from "../components/user/ContributorWordlistTools";
 import UserWordlistTool from "../components/user/UserWordlistTools";
 import { useWordlistsContext } from "../hooks/useWordlistsContext";
-import WordlistUserList from "../components/wordlist/WordlistUserList";
 
 export default function WordlistDashboard() {
   const { id } = useParams();
@@ -36,47 +34,43 @@ export default function WordlistDashboard() {
     if (user) {
       fetchWordlist(); // calling the function we just made, and we can use the await keyword here instead
     }
-  }, []); // needs dispatch dependency
+  }, [dispatch, id, user]); // needs dispatch dependency
 
-  {
-    if (wordlist) {
-      return (
-        <div className="container">
-          <div className={styles.words}>
-            <h1>{wordlist.title}</h1>
-            <h4>Owner: {wordlist.owner}</h4>
-            <div>
-              <h4>Contributors:</h4>
-              <ul>
-                {wordlist.contributor.length !== 0
-                  ? wordlist.contributor.map((u) => <li key={u}>{u}</li>)
-                  : "None"}
-              </ul>
-            </div>
-            <div>
-              <h4>Assigned Users:</h4>
-              <ul>
-                {wordlist.user.length !== 0
-                  ? wordlist.user.map((u) => <li key={u}>{u}</li>)
-                  : "None"}
-              </ul>
-            </div>
-            <UserWordlistTool />
-            {user.type !== "user" && (
-              <ContributorWordlistTools wordlist_id={id} />
-            )}
-            {wordlist.words ? (
-              wordlist.words.map((word) => (
-                <WordDetails key={word._id} word={word} />
-              ))
-            ) : (
-              <div>No Words</div>
-            )}
+  if (wordlist) {
+    return (
+      <div className="container">
+        <div className={styles.words}>
+          <h1>{wordlist.title}</h1>
+          <h4>Owner: {wordlist.owner}</h4>
+          <div>
+            <h4>Contributors:</h4>
+            <ul>
+              {wordlist.contributor.length !== 0
+                ? wordlist.contributor.map((u) => <li key={u}>{u}</li>)
+                : "None"}
+            </ul>
           </div>
+          <div>
+            <h4>Assigned Users:</h4>
+            <ul>
+              {wordlist.user.length !== 0
+                ? wordlist.user.map((u) => <li key={u}>{u}</li>)
+                : "None"}
+            </ul>
+          </div>
+          <UserWordlistTool />
+
+          {wordlist.words ? (
+            wordlist.words.map((word) => (
+              <WordDetails key={word._id} word={word} />
+            ))
+          ) : (
+            <div>No Words</div>
+          )}
         </div>
-      );
-    } else {
-      return <div>Loading</div>;
-    }
+      </div>
+    );
+  } else {
+    return <div>Loading</div>;
   }
 }

@@ -8,6 +8,7 @@ const {
   getWordlist,
   getWordlists,
   deleteWordlist,
+  updateWordlist,
   postUser,
   deleteUser,
   postContributor,
@@ -37,6 +38,9 @@ router.get("/", getWordlists);
 
 // DELETE a wordlist
 router.delete("/:id", deleteWordlist);
+
+// UPDATE a wordlist
+router.patch("/:id", updateWordlist);
 
 // POSTING user in a wordlist
 router.post("/:id/user", postUser);

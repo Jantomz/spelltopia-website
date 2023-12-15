@@ -1,0 +1,32 @@
+:root {
+  --primary: #d62246;
+  --secondary: #0c6291;
+}
+
+.smallBtn {
+  border: none;
+  background-color: var(--secondary);
+  color: #fff;
+  padding: 1em;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.bigBtn {
+  border: none;
+  background-color: var(--primary);
+  color: #fff;
+  padding: 2em;
+  font-size: 1.5em;
+  border-radius: 5px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.hbox {
+  display: flex;
+  gap: 2em;
+  justify-content: flex-start;
+  padding: 2em 0em;
+}

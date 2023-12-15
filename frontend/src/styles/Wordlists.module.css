@@ -1,6 +1,6 @@
 .wordlists {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  flex-direction: row;
+  justify-content: flex-start;
   gap: 3em;
 }

@@ -71,6 +71,26 @@ const getWordlist = async (req, res) => {
   res.status(200).json(wordlist);
 };
 
+const updateWordlist = async (req, res) => {
+  const { id } = req.params;
+  const { title } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such wordlist" });
+  }
+
+  try {
+    // wordlist.create() is asynchronous, it is calling the collection and using a method to create a document, the response we are promised is the new document that was created along with its ID
+    const wordlist = await Wordlist.findOneAndUpdate({ _id: id }, { title });
+
+    // this returns the response that the word was created
+    // tacking on status 200 means the response was received and things were good, then the dot notation just sends the json format of the newly added document
+    res.status(200).json(wordlist);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const deleteWordlist = async (req, res) => {
   const { id } = req.params;
 
@@ -313,6 +333,7 @@ module.exports = {
   getWordlists,
   createWordlist,
   deleteWordlist,
+  updateWordlist,
   postUser,
   deleteUser,
   postContributor,
