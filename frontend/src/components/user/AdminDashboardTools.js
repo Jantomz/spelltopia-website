@@ -3,10 +3,12 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { useWordlistsContext } from "../../hooks/useWordlistsContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../../styles/Tools.module.css";
+import { useUserContext } from "../../hooks/useUserContext";
 
 export default function AdminDashboardTools() {
   const { user } = useAuthContext();
   const { dispatch } = useWordlistsContext();
+  const { dispatch: userDispatch, users } = useUserContext();
 
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -47,9 +49,30 @@ export default function AdminDashboardTools() {
     }
   };
 
+  const handleUsers = async () => {
+    const userResponse = await fetch(
+      `https://spelltopia-website.onrender.com/api/user`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+
+    const userJson = await userResponse.json();
+
+    if (userResponse.ok) {
+      userDispatch({ type: "SET_USERS", payload: userJson });
+    }
+
+    navigate(`/users`);
+  };
+
   return (
     <div className={styles.hbox}>
-      <button className={styles.smallBtn}>Users</button>
+      <button className={styles.smallBtn} onClick={handleUsers}>
+        Users
+      </button>
       <button onClick={handleCreate} className={styles.smallBtn}>
         Create Wordlist
       </button>

@@ -21,9 +21,12 @@ export default function UserWordlistTool() {
 
   return (
     <div className={styles.hbox}>
-      <button onClick={handleClick} className={styles.bigBtn}>
-        Practice
-      </button>
+      {wordlist.words.length !== 0 && (
+        <button onClick={handleClick} className={styles.bigBtn}>
+          Practice
+        </button>
+      )}
+
       {user.type !== "user" && <ContributorWordlistTools wordlist_id={id} />}
     </div>
   );

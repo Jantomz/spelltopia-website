@@ -16,20 +16,24 @@ const getWordlists = async (req, res) => {
   const user = req.user.email;
   let users = {};
 
-  users.assigned = await Wordlist.find({
-    user,
-  }).sort({
-    createdAt: -1,
-  }); // sorting in descending order
+  try {
+    users.assigned = await Wordlist.find({
+      user,
+    }).sort({
+      createdAt: -1,
+    }); // sorting in descending order
 
-  users.owned = await Wordlist.find({ owner: user }).sort({
-    createdAt: -1,
-  });
+    users.owned = await Wordlist.find({ owner: user }).sort({
+      createdAt: -1,
+    });
 
-  users.contributed = await Wordlist.find({ contributor: user }).sort({
-    createdAt: -1,
-  });
-  res.status(200).json(users);
+    users.contributed = await Wordlist.find({ contributor: user }).sort({
+      createdAt: -1,
+    });
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 const createWordlist = async (req, res) => {

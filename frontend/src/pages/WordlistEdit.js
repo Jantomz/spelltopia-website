@@ -9,9 +9,11 @@ import WordDetailsEdit from "../components/wordlist/WordDetails";
 import WordForm from "../components/wordlist/WordForm";
 import WordlistUserList from "../components/wordlist/WordlistUserList";
 import { useWordlistsContext } from "../hooks/useWordlistsContext";
+import { useUserContext } from "../hooks/useUserContext";
 
 export default function WordlistEdit() {
   const { wordlist, dispatch } = useWordlistsContext();
+  const { dispatch: userDispatch, users } = useUserContext();
   const { id } = useParams();
   const { user } = useAuthContext();
   const navigate = useNavigate();
@@ -46,11 +48,10 @@ export default function WordlistEdit() {
       {
         method: "PATCH",
         headers: {
+          "Content-Type": "application/json", // makes the content type specified as json, otherwise it would be undefined
           Authorization: `Bearer ${user.token}`,
         },
-        body: {
-          title,
-        },
+        body: JSON.stringify({ title }),
       }
     );
 
@@ -80,22 +81,42 @@ export default function WordlistEdit() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `https://spelltopia-website.onrender.com/api/wordlists/${id}/user`,
+    const userResponse = await fetch(
+      `https://spelltopia-website.onrender.com/api/user`,
       {
-        method: "POST",
-        body: JSON.stringify({ email }),
         headers: {
-          "Content-Type": "application/json", // makes the content type specified as json, otherwise it would be undefined
           Authorization: `Bearer ${user.token}`,
         },
       }
     );
 
-    const json = await response.json();
+    const userJson = await userResponse.json();
 
-    if (response.ok) {
-      dispatch({ type: "SET_WORDLIST", payload: json });
+    if (userResponse.ok) {
+      userDispatch({ type: "SET_USERS", payload: userJson });
+    }
+
+    if (!wordlist.user?.includes(email) && users.includes(email)) {
+      // need to change this above, since the users object is the full object, not just the email
+      const response = await fetch(
+        `https://spelltopia-website.onrender.com/api/wordlists/${id}/user`,
+        {
+          method: "POST",
+          body: JSON.stringify({ email }),
+          headers: {
+            "Content-Type": "application/json", // makes the content type specified as json, otherwise it would be undefined
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: "SET_WORDLIST", payload: json });
+        setEmail("");
+      }
+    } else {
       setEmail("");
     }
   };

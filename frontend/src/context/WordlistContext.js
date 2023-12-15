@@ -15,7 +15,7 @@ export const wordlistsReducer = (state, action) => {
       };
     case "DELETE_WORDLIST":
       return {
-        wordlists: state.wordlists.filter((w) => w._id !== action.payload._id),
+        wordlists: state.wordlists?.filter((w) => w._id !== action.payload._id),
       };
     case "SET_WORDLIST":
       return {

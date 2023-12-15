@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Navbar from "./components/base/Navbar";
 import Practice from "./pages/Practice";
+import UserList from "./components/user/UserList";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);
@@ -55,6 +56,12 @@ function App() {
           <Route
             path="/practice/:id"
             element={user ? <Practice /> : <Navigate to="/login" />}
+          ></Route>
+          <Route
+            path="/users"
+            element={
+              user.type === "admin" ? <UserList /> : <Navigate to="/login" />
+            }
           ></Route>
         </Routes>
       )}
