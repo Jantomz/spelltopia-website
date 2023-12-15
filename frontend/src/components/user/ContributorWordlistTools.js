@@ -4,8 +4,7 @@ export default function ContributorWordlistTools(props) {
   const navigate = useNavigate();
 
   const editWordlist = () => {
-    const editURL = `/wordlist/edit/${props.wordlist_id}`;
-    navigate(editURL);
+    navigate(`/wordlist/edit/${props.wordlist_id}`);
   };
 
   return (

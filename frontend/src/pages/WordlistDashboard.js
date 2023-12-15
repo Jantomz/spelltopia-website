@@ -19,7 +19,7 @@ export default function WordlistDashboard() {
   useEffect(() => {
     const fetchWordlist = async () => {
       const response = await fetch(
-        `http://localhost:4000/api/wordlists/${id}`,
+        `https://spelltopia-website.onrender.com/api/wordlists/${id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

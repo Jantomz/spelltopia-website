@@ -15,7 +15,7 @@ export default function WordDetails({ word }) {
 
   const handleDelete = async () => {
     const response = await fetch(
-      `http://localhost:4000/api/wordlists/${id}/words/${word._id}`,
+      `https://spelltopia-website.onrender.com/api/wordlists/${id}/words/${word._id}`,
       {
         method: "DELETE",
         headers: {

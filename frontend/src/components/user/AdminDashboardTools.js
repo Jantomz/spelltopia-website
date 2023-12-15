@@ -21,14 +21,17 @@ export default function AdminDashboardTools() {
       owner: user.email,
     };
 
-    const response = await fetch("http://localhost:4000/api/wordlists", {
-      method: "POST",
-      body: JSON.stringify(wordlist),
-      headers: {
-        "Content-Type": "application/json", // makes the content type specified as json
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      `https://spelltopia-website.onrender.com/api/wordlists`,
+      {
+        method: "POST",
+        body: JSON.stringify(wordlist),
+        headers: {
+          "Content-Type": "application/json", // makes the content type specified as json
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     const json = await response.json(); // when we make the post request, our backend also sends back the response as a json
 

@@ -14,11 +14,14 @@ export default function Wordlists() {
 
   useEffect(() => {
     const fetchWordlists = async () => {
-      const response = await fetch("http://localhost:4000/api/wordlists", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }); // previously had http://localhost:4000 for the request, but now the package.json holds the automatic redirection to our backend server using proxy, removes cors error in development
+      const response = await fetch(
+        `https://spelltopia-website.onrender.com/api/wordlists`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      ); // previously had http://localhost:4000 for the request, but now the package.json holds the automatic redirection to our backend server using proxy, removes cors error in development
 
       const json = await response.json(); // parses the response json into objects
       if (response.ok) {

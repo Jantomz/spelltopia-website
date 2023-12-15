@@ -39,7 +39,7 @@ export default function WordForm() {
     };
 
     const response = await fetch(
-      `http://localhost:4000/api/wordlists/${id}/words`,
+      `https://spelltopia-website.onrender.com/api/wordlists/${id}/words`,
       {
         method: "POST",
         body: JSON.stringify(word),

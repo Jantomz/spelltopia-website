@@ -11,7 +11,7 @@ export default function WordlistUserList({ email }) {
 
   const handleDelete = async () => {
     const response = await fetch(
-      `http://localhost:4000/api/wordlists/${id}/user`,
+      `https://spelltopia-website.onrender.com/api/wordlists/${id}/user`,
       {
         method: "DELETE",
         body: JSON.stringify({ email }),

@@ -18,11 +18,14 @@ export default function WordlistEdit() {
   const [email, setEmail] = useState("");
 
   const fetchWordlist = async () => {
-    const response = await fetch(`http://localhost:4000/api/wordlists/${id}`, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    }); // previously had http://localhost:4000 for the request, but now the package.json holds the automatic redirection to our backend server using proxy, removes cors error in development
+    const response = await fetch(
+      `https://spelltopia-website.onrender.com/api/wordlists/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    ); // previously had http://localhost:4000 for the request, but now the package.json holds the automatic redirection to our backend server using proxy, removes cors error in development
     const json = await response.json(); // parses the response json into objects
 
     if (response.ok) {
@@ -34,7 +37,7 @@ export default function WordlistEdit() {
     e.preventDefault();
 
     const response = await fetch(
-      `http://localhost:4000/api/wordlists/${id}/user`,
+      `https://spelltopia-website.onrender.com/api/wordlists/${id}/user`,
       {
         method: "POST",
         body: JSON.stringify({ email }),
@@ -53,12 +56,15 @@ export default function WordlistEdit() {
     }
   };
   const handleDelete = async () => {
-    const response = await fetch(`http://localhost:4000/api/wordlists/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      `https://spelltopia-website.onrender.com/api/wordlists/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     const json = await response.json();
 
