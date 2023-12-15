@@ -40,18 +40,21 @@ export default function Wordlists() {
   if (wordlists) {
     return (
       <div>
+        {wordlists.owned?.length !== 0 && <h1>Owned</h1>}
         <div className={styles.wordlists}>
           {wordlists.owned &&
             wordlists.owned.map((wordlist) => (
               <WordlistDetails key={wordlist._id} wordlist={wordlist} />
             ))}
         </div>
+        {wordlists.assigned?.length !== 0 && <h1>Assigned</h1>}
         <div className={styles.wordlists}>
           {wordlists.assigned &&
             wordlists.assigned.map((wordlist) => (
               <WordlistDetails key={wordlist._id} wordlist={wordlist} />
             ))}
         </div>
+        {wordlists.contributed?.length !== 0 && <h1>Contributed</h1>}
         <div className={styles.wordlists}>
           {wordlists.contributed &&
             wordlists.contributed.map((wordlist) => (

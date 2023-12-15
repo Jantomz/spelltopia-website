@@ -61,3 +61,11 @@ i {
 .editingTitle {
   padding: 0em;
 }
+
+.error {
+  padding: 0.5em;
+  background-color: rgba(255, 145, 145, 0.464);
+  border: 2px solid var(--primary);
+  border-radius: 4px;
+  color: var(--primary);
+}

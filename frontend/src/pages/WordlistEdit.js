@@ -21,6 +21,7 @@ export default function WordlistEdit() {
   const [editingTitle, setEditingTitle] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [title, setTitle] = useState();
+  const [error, setError] = useState(null);
 
   const editTrue = () => {
     setEditingTitle(true);
@@ -40,6 +41,10 @@ export default function WordlistEdit() {
 
   const focusTrue = () => {
     setIsFocused(true);
+  };
+
+  const removeError = () => {
+    setError(null);
   };
 
   const editWordlist = async () => {
@@ -96,7 +101,13 @@ export default function WordlistEdit() {
       userDispatch({ type: "SET_USERS", payload: userJson });
     }
 
-    if (!wordlist.user?.includes(email) && users.includes(email)) {
+    const userEmails = [];
+
+    users?.map((u) => {
+      userEmails.push(u.email);
+    });
+
+    if (!wordlist.user?.includes(email) && userEmails?.includes(email)) {
       // need to change this above, since the users object is the full object, not just the email
       const response = await fetch(
         `https://spelltopia-website.onrender.com/api/wordlists/${id}/user`,
@@ -115,9 +126,15 @@ export default function WordlistEdit() {
       if (response.ok) {
         dispatch({ type: "SET_WORDLIST", payload: json });
         setEmail("");
+        setError(null);
       }
     } else {
       setEmail("");
+      if (wordlist.user?.includes(email)) {
+        setError("User is already added!");
+      } else {
+        setError("User does not exist");
+      }
     }
   };
   const handleDelete = async () => {
@@ -184,8 +201,10 @@ export default function WordlistEdit() {
                     placeholder="add email"
                     type="email"
                     onChange={(e) => setEmail(e.target.value)}
+                    onFocus={removeError}
                   ></input>
                 </form>
+                {error && <div className={styles.error}>{error}</div>}
               </li>
             </ul>
           </div>

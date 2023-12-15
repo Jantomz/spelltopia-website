@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import WordPractice from "../components/wordlist/WordPractice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useWordlistsContext } from "../hooks/useWordlistsContext";
 
@@ -8,6 +8,7 @@ export default function Practice() {
   const { id } = useParams();
   const { wordlist, dispatch } = useWordlistsContext();
   const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWordlist = async () => {
@@ -34,6 +35,12 @@ export default function Practice() {
   if (wordlist) {
     return (
       <div className="container">
+        <button
+          className="back"
+          onClick={() => navigate(`/wordlist/dashboard/${wordlist._id}`)}
+        >
+          Back
+        </button>
         <WordPractice key={wordlist.words} words={wordlist.words} />
       </div>
     );

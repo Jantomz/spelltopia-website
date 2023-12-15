@@ -5,20 +5,19 @@ import { useParams } from "react-router-dom";
 export default function WordPractice({ words }) {
   const { id } = useParams();
 
-  const [spelling, setSpelling] = useState(null);
-  const [count, setCount] = useState();
+  const [spelling, setSpelling] = useState("");
 
   const [wrong, setWrong] = useState(null);
 
   const [word, setWord] = useState();
   useEffect(() => {
-    const count = localStorage.getItem(`${id}-count`);
+    let count = localStorage.getItem(`${id}-count`);
 
     if (!count) {
       localStorage.setItem(`${id}-count`, 1);
     }
 
-    setCount(localStorage.getItem(`${id}-count`));
+    count = localStorage.getItem(`${id}-count`);
 
     setWord(words[count - 1]);
   }, []);
@@ -31,11 +30,13 @@ export default function WordPractice({ words }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    let count = localStorage.getItem(`${id}-count`);
+
     if (spelling === word.title && count < words.length) {
-      setCount(Number(count) + 1);
-      localStorage.setItem(`${id}-count`, Number(count) + 1);
+      count++;
+      localStorage.setItem(`${id}-count`, count);
       setWrong(null);
-      setWord(words[count]);
+      setWord(words[count - 1]);
       setSpelling("");
     } else if (spelling === word.title) {
       setWrong("Done Wordlist");
@@ -44,7 +45,19 @@ export default function WordPractice({ words }) {
     }
   };
 
-  if (count) {
+  const backward = () => {
+    let count = localStorage.getItem(`${id}-count`);
+
+    if (count > 1) {
+      count--;
+      localStorage.setItem(`${id}-count`, count);
+      setWrong(null);
+      setWord(words[count - 1]);
+      setSpelling("");
+    }
+  };
+
+  if (word) {
     return (
       <div className={styles.card}>
         <span
@@ -53,16 +66,22 @@ export default function WordPractice({ words }) {
         >
           volume_up
         </span>
-        <h4>{word.partOfSpeech}</h4>
-        <h4>{word.definition}</h4>
-        <h4>{word.etymology}</h4>
+        <h4>{word?.partOfSpeech}</h4>
+        <h4>{word?.definition}</h4>
+        <h4>{word?.etymology}</h4>
         <form onSubmit={handleSubmit}>
           <input
             onChange={(e) => setSpelling(e.target.value)}
             value={spelling}
           ></input>
         </form>
-        {wrong}
+        <div className={styles.wrong}>{wrong}</div>
+        <button className={styles.backward} onClick={backward}>
+          <span className="material-symbols-outlined">arrow_back_ios</span>
+        </button>
+        <button className={styles.forward} onClick={handleSubmit}>
+          <span className="material-symbols-outlined">arrow_forward_ios</span>
+        </button>
       </div>
     );
   } else {

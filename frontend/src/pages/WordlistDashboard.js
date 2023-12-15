@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import styles from "../styles/WordlistDashboard.module.css";
 
 import WordDetails from "../components/wordlist/WordDetails";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 import UserWordlistTool from "../components/user/UserWordlistTools";
@@ -13,6 +13,7 @@ export default function WordlistDashboard() {
   const { id } = useParams();
   const { user } = useAuthContext();
   const { wordlist, dispatch } = useWordlistsContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWordlist = async () => {
@@ -39,6 +40,9 @@ export default function WordlistDashboard() {
   if (wordlist) {
     return (
       <div className="container">
+        <button className="back" onClick={() => navigate("/")}>
+          Back
+        </button>
         <div className={styles.words}>
           <h1>{wordlist.title}</h1>
           <h4>Owner: {wordlist.owner}</h4>

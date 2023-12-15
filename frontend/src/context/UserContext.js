@@ -4,7 +4,7 @@ export const UserContext = createContext();
 
 export const userReducer = (state, action) => {
   switch (action.type) {
-    case "GET_USERS":
+    case "SET_USERS":
       return { users: action.payload };
     case "ADD_USER":
       return { users: [action.payload, ...state.users] };

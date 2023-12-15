@@ -38,3 +38,12 @@ hr {
 .container {
   padding: 4em;
 }
+
+.back {
+  background-color: var(--secondary);
+  border: none;
+  padding: 1em;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}

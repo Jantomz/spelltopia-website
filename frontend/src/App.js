@@ -60,7 +60,7 @@ function App() {
           <Route
             path="/users"
             element={
-              user.type === "admin" ? <UserList /> : <Navigate to="/login" />
+              user?.type === "admin" ? <UserList /> : <Navigate to="/login" />
             }
           ></Route>
         </Routes>
