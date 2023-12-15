@@ -138,7 +138,7 @@ export default function WordlistEdit() {
           ) : (
             <h1 onMouseEnter={editTrue} onMouseLeave={editFalse}>
               {wordlist.title}
-              <span class="material-symbols-outlined">edit</span>
+              <span className="material-symbols-outlined">edit</span>
             </h1>
           )}
           <h4>Owner: {wordlist.owner}</h4>

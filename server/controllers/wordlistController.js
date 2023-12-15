@@ -81,7 +81,11 @@ const updateWordlist = async (req, res) => {
 
   try {
     // wordlist.create() is asynchronous, it is calling the collection and using a method to create a document, the response we are promised is the new document that was created along with its ID
-    const wordlist = await Wordlist.findOneAndUpdate({ _id: id }, { title });
+    const wordlist = await Wordlist.findOneAndUpdate(
+      { _id: id },
+      { title },
+      { new: true }
+    );
 
     // this returns the response that the word was created
     // tacking on status 200 means the response was received and things were good, then the dot notation just sends the json format of the newly added document
