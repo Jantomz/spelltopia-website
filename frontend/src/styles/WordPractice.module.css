@@ -1,5 +1,29 @@
 .card {
   padding: 4em;
-  margin: 2em;
+  margin: auto;
   background: seashell;
+  position: relative;
+  width: fit-content;
+}
+
+.forward {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  bottom: 2em;
+  right: 3em;
+  cursor: pointer;
+}
+
+.backward {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  bottom: 2em;
+  left: 3em;
+  cursor: pointer;
+}
+
+.wrong {
+  padding: 1em 0em;
 }

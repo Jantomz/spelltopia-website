@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useWordlistsContext } from "../../hooks/useWordlistsContext";
 import { useNavigate } from "react-router-dom";
+import styles from "../../styles/Tools.module.css";
+import { useUserContext } from "../../hooks/useUserContext";
 
 export default function AdminDashboardTools() {
   const { user } = useAuthContext();
@@ -11,24 +13,27 @@ export default function AdminDashboardTools() {
   const navigate = useNavigate();
 
   const handleCreate = async () => {
-    const wordlist = {
-      title: "New Wordlist",
-      owner: user.email,
-    };
-
     if (!user) {
       setError("You must be logged in");
       return;
     }
 
-    const response = await fetch("http://localhost:4000/api/wordlists", {
-      method: "POST",
-      body: JSON.stringify(wordlist),
-      headers: {
-        "Content-Type": "application/json", // makes the content type specified as json
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const wordlist = {
+      title: "New Wordlist",
+      owner: user.email,
+    };
+
+    const response = await fetch(
+      `https://spelltopia-website.onrender.com/api/wordlists`,
+      {
+        method: "POST",
+        body: JSON.stringify(wordlist),
+        headers: {
+          "Content-Type": "application/json", // makes the content type specified as json
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     const json = await response.json(); // when we make the post request, our backend also sends back the response as a json
 
@@ -43,10 +48,18 @@ export default function AdminDashboardTools() {
     }
   };
 
+  const handleUsers = async () => {
+    navigate(`/users`);
+  };
+
   return (
-    <div>
-      <button>Users</button>
-      <button onClick={handleCreate}>Create Wordlist</button>
+    <div className={styles.hbox}>
+      <button className={styles.smallBtn} onClick={handleUsers}>
+        Users
+      </button>
+      <button onClick={handleCreate} className={styles.smallBtn}>
+        Create Wordlist
+      </button>
       {error && <div>{error}</div>}
     </div>
   );

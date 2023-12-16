@@ -11,9 +11,9 @@ export default function WordlistUserList({ email }) {
 
   const handleDelete = async () => {
     const response = await fetch(
-      `http://localhost:4000/api/wordlists/remove/${id}`,
+      `https://spelltopia-website.onrender.com/api/wordlists/${id}/user`,
       {
-        method: "PATCH",
+        method: "DELETE",
         body: JSON.stringify({ email }),
         headers: {
           "Content-Type": "application/json", // makes the content type specified as json, otherwise it would be undefined
@@ -25,7 +25,7 @@ export default function WordlistUserList({ email }) {
     const json = await response.json();
 
     if (response.ok) {
-      dispatch({ type: "SET_WORDLIST_USERS", payload: json });
+      dispatch({ type: "SET_WORDLIST", payload: json });
     }
   };
 

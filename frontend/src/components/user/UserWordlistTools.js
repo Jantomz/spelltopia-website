@@ -1,18 +1,33 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useWordsContext } from "../../hooks/useWordsContext";
+import { useWordlistsContext } from "../../hooks/useWordlistsContext";
+import styles from "../../styles/Tools.module.css";
+import ContributorWordlistTools from "./ContributorWordlistTools";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function UserWordlistTool() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { words } = useWordsContext();
+  const { wordlist } = useWordlistsContext();
+  const { user } = useAuthContext();
 
   const handleClick = () => {
-    navigate(`/practice/${id}/${words[0]._id}`);
+    navigate(`/practice/${id}`);
+    const count = localStorage.getItem(`${id}-count`);
+
+    if (!count || count === wordlist.words.length) {
+      localStorage.setItem(`${id}-count`, 1);
+    }
   };
 
   return (
-    <>
-      <button onClick={handleClick}>Practice</button>
-    </>
+    <div className={styles.hbox}>
+      {wordlist.words.length !== 0 && (
+        <button onClick={handleClick} className={styles.bigBtn}>
+          Practice
+        </button>
+      )}
+
+      {user.type !== "user" && <ContributorWordlistTools wordlist_id={id} />}
+    </div>
   );
 }

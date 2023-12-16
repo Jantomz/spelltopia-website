@@ -12,6 +12,14 @@ body {
   box-sizing: border-box;
 }
 
+input {
+  font-family: "Rubik";
+}
+
+button {
+  font-family: "Rubik";
+}
+
 .audio-symbol {
   cursor: pointer;
 }
@@ -29,4 +37,13 @@ hr {
 
 .container {
   padding: 4em;
+}
+
+.back {
+  background-color: var(--secondary);
+  border: none;
+  padding: 1em;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
 }

@@ -1,6 +1,7 @@
 :root {
   --primary: #d62246;
   --secondary: #0c6291;
+  --secondaryLight: #0c639125;
 }
 
 .signup {
@@ -40,7 +41,7 @@
 }
 
 .sign input {
-  padding: 0.8em 0.2em;
+  padding: 0.8em;
   border: none;
   border-bottom: 2px solid var(--secondary);
   background-color: transparent;
@@ -48,6 +49,10 @@
 
 .sign input:focus {
   outline: none;
+  background-color: var(--secondaryLight);
+  -webkit-transition: background-color 100ms linear;
+  -ms-transition: background-color 100ms linear;
+  transition: background-color 100ms linear;
 }
 
 .error {

@@ -1,6 +1,7 @@
 import { useAuthContext } from "../hooks/useAuthContext";
-import Wordlists from "./Wordlists";
+import Wordlists from "../components/wordlist/Wordlists";
 import AdminDashboardTools from "../components/user/AdminDashboardTools";
+import { useEffect } from "react";
 
 export default function UserDashboard() {
   const { user } = useAuthContext();

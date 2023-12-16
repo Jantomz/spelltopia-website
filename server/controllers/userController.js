@@ -54,9 +54,20 @@ const getUser = async (req, res) => {
   if (!user) {
     // have to return or else the rest of the code will be run
     return res.status(404).json({ error: "No such user" });
+  } else {
+    return res.status(200).json(user);
   }
-
-  res.status(200).json(user);
 };
 
-module.exports = { loginUser, signupUser, getUser };
+const getUsers = async (req, res) => {
+  const user = await User.find({}).sort({ createdAt: -1 });
+
+  if (!user) {
+    // have to return or else the rest of the code will be run
+    return res.status(404).json({ error: "No such user" });
+  } else {
+    return res.status(200).json(user);
+  }
+};
+
+module.exports = { loginUser, signupUser, getUser, getUsers };
