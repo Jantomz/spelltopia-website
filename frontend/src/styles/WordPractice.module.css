@@ -3,7 +3,8 @@
   margin: auto;
   background: seashell;
   position: relative;
-  width: fit-content;
+  min-width: fit-content;
+  width: 30%;
 }
 
 .forward {
@@ -26,4 +27,11 @@
 
 .wrong {
   padding: 1em 0em;
+}
+
+.count {
+  position: absolute;
+  bottom: 2em;
+  left: 50%;
+  cursor: pointer;
 }

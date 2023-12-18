@@ -22,6 +22,7 @@ export default function WordlistEdit() {
   const [isFocused, setIsFocused] = useState(false);
   const [title, setTitle] = useState();
   const [error, setError] = useState(null);
+  const userEmails = [];
 
   const editTrue = () => {
     setEditingTitle(true);
@@ -48,22 +49,26 @@ export default function WordlistEdit() {
   };
 
   const editWordlist = async () => {
-    const response = await fetch(
-      `https://spelltopia-website.onrender.com/api/wordlists/${id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json", // makes the content type specified as json, otherwise it would be undefined
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({ title }),
+    if (title) {
+      const response = await fetch(
+        `https://spelltopia-website.onrender.com/api/wordlists/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json", // makes the content type specified as json, otherwise it would be undefined
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify({ title }),
+        }
+      );
+
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: "SET_WORDLIST", payload: json });
       }
-    );
-
-    const json = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: "SET_WORDLIST", payload: json });
+    } else {
+      console.log("error, wordlist title empty");
     }
   };
 
@@ -99,13 +104,12 @@ export default function WordlistEdit() {
 
     if (userResponse.ok) {
       userDispatch({ type: "SET_USERS", payload: userJson });
+
+      users?.map((u) => {
+        userEmails.push(u.email);
+        return true;
+      });
     }
-
-    const userEmails = [];
-
-    users?.map((u) => {
-      userEmails.push(u.email);
-    });
 
     if (!wordlist.user?.includes(email) && userEmails?.includes(email)) {
       // need to change this above, since the users object is the full object, not just the email
@@ -159,6 +163,12 @@ export default function WordlistEdit() {
   if (wordlist) {
     return (
       <div className="container">
+        <button
+          className="back"
+          onClick={() => navigate(`/wordlist/dashboard/${id}`)}
+        >
+          Back
+        </button>
         <div className={styles.words}>
           {editingTitle ? (
             <h1>

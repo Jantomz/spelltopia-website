@@ -3,7 +3,6 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { useWordlistsContext } from "../../hooks/useWordlistsContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../../styles/Tools.module.css";
-import { useUserContext } from "../../hooks/useUserContext";
 
 export default function AdminDashboardTools() {
   const { user } = useAuthContext();

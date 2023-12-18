@@ -6,12 +6,18 @@ import styles from "../styles/Forms.module.css";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [bot, setBot] = useState("");
 
   const { login, error, isLoading } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password);
+
+    if (bot) {
+      console.log("error");
+    } else {
+      await login(email, password);
+    }
   };
 
   return (
@@ -29,6 +35,12 @@ export default function Login() {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+        ></input>
+        <input
+          name="bot-field"
+          placeholder="email address"
+          type="hidden"
+          onChange={(e) => setBot(e.target.value)}
         ></input>
 
         <button type="submit" disabled={isLoading}>

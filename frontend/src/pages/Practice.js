@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import WordPractice from "../components/wordlist/WordPractice";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -30,7 +30,7 @@ export default function Practice() {
     if (user) {
       fetchWordlist();
     }
-  }, []);
+  }, [dispatch, id, user]);
 
   if (wordlist) {
     return (

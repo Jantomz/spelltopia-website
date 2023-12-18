@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import styles from "../styles/WordlistDashboard.module.css";
 
 import WordDetails from "../components/wordlist/WordDetails";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 import UserWordlistTool from "../components/user/UserWordlistTools";

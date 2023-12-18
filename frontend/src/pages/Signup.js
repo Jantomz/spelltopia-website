@@ -8,13 +8,17 @@ export default function Signup() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [bot, setBot] = useState("");
 
   const { signup, error, isLoading } = useSignup();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    await signup(firstName, lastName, email, password);
+    if (bot) {
+      console.log("error 404");
+    } else {
+      await signup(firstName, lastName, email, password);
+    }
   };
 
   return (
@@ -45,6 +49,12 @@ export default function Signup() {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+        ></input>
+        <input
+          name="bot-field"
+          placeholder="email address"
+          type="hidden"
+          onChange={(e) => setBot(e.target.value)}
         ></input>
 
         <button type="submit" disabled={isLoading}>
