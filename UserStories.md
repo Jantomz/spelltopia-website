@@ -42,5 +42,7 @@
 6. Make an upload feature for the wordlist so that it can be uploaded
 7. Make validation for backend, so you can't put multiple users as different roles on a wordlist or put a user more than once
 8. Make validation for viewing wordlists, must be a user added as a contributor user or owner to view or practice
-9. [x] Add honeypot
-10. Make it so that contributor can be assigned or contribute to a wordlist, but a user cannot be added as a contributor
+
+9. Make it so that contributor can be assigned or contribute to a wordlist, but a user cannot be added as a contributor
+
+10. Trying to fix the current issue with getting users and making sure only some users can be added to specific wordlists
