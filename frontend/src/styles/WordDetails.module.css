@@ -26,6 +26,14 @@
   align-items: center;
 }
 
+.titleAlone {
+  font-size: 2em;
+  font-weight: 600;
+  margin: 20px 0px;
+  display: flex;
+  align-items: center;
+}
+
 .word span {
   padding: 0px 20px;
 }

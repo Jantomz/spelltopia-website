@@ -59,7 +59,6 @@ const createWordlist = async (req, res) => {
 
 const getWordlist = async (req, res) => {
   const { id } = req.params;
-  const { email } = req.user.email;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such wordlist" });

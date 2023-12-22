@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useWordlistsContext } from "../../hooks/useWordlistsContext";
+import AudioRecorder from "../special/audioRecorder";
 
 export default function WordForm() {
   const { dispatch } = useWordlistsContext();
@@ -189,6 +190,7 @@ export default function WordForm() {
               : styles.inputInfo
           }
         ></textarea>
+        <AudioRecorder />
       </form>
       {error && <div className={styleForm.error}>{error}</div>}
     </div>

@@ -20,12 +20,16 @@ export default function WordPractice({ words }) {
     count = localStorage.getItem(`${id}-count`);
 
     setWord(words[count - 1]);
-  }, []);
+  }, [id, words]);
 
   const playAudio = () => {
     const audio = new Audio(word.audio);
     audio.play();
   };
+
+  function getCount() {
+    return localStorage.getItem(`${id}-count`);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,6 +73,7 @@ export default function WordPractice({ words }) {
         <h4>{word?.partOfSpeech}</h4>
         <h4>{word?.definition}</h4>
         <h4>{word?.etymology}</h4>
+        <h4>{word?.sentence}</h4>
         <form onSubmit={handleSubmit}>
           <input
             onChange={(e) => setSpelling(e.target.value)}
@@ -79,6 +84,9 @@ export default function WordPractice({ words }) {
         <button className={styles.backward} onClick={backward}>
           <span className="material-symbols-outlined">arrow_back_ios</span>
         </button>
+        <div className={styles.count}>
+          {getCount()}/{words.length}
+        </div>
         <button className={styles.forward} onClick={handleSubmit}>
           <span className="material-symbols-outlined">arrow_forward_ios</span>
         </button>

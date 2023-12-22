@@ -3,7 +3,7 @@ import { useWordlistsContext } from "./useWordlistsContext";
 
 export const useLogout = () => {
   const { dispatch } = useAuthContext();
-  const { dispatch: wordlistsDispatch, wordlists } = useWordlistsContext();
+  const { dispatch: wordlistsDispatch } = useWordlistsContext();
 
   const logout = () => {
     localStorage.clear();

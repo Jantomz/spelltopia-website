@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import Navbar from "./components/base/Navbar";
 import Practice from "./pages/Practice";
 import UserList from "./components/user/UserList";
+import Verify from "./pages/Verify";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);
@@ -62,6 +63,10 @@ function App() {
             element={
               user?.type === "admin" ? <UserList /> : <Navigate to="/login" />
             }
+          ></Route>
+          <Route
+            path="/verify/:id/:token"
+            element={user ? <Navigate to="/" /> : <Verify />}
           ></Route>
         </Routes>
       )}

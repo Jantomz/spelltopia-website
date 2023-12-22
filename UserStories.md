@@ -27,19 +27,25 @@
 
 # To Do:
 
-1. Make the admin able to add wordlists
-2. Make the contributor be able to edit wordlists
+1. [x] Make the admin able to add wordlists
+2. [x] Make the contributor be able to edit wordlists
 3. Make the user be able to view and practice wordlists and add to their list of wordlists that they use
-4. Assign users to a wordlist
+4. [x] Assign users to a wordlist
 
 # Where I ended off:
 
 1. [x] I am trying to show the wordlist details on the wordlist dashboard, I can maybe just make one api call instead of nested ones
 2. [x] Make the wordlist details a one time fetch call and then make a wordlists context to have the array of objects of the wordlists
-3. Make sure a user can only be placed as one type of user on a wordlist
+3. [x] Make sure a user can only be placed as one type of user on a wordlist
 4. [x] Make the self-test
 5. Make it so that everytime they leave a wordlist, the global context gets reset
 6. Make an upload feature for the wordlist so that it can be uploaded
-7. Make validation for backend, so you can't put multiple users as different roles on a wordlist or put a user more than once
+7. [x] Make validation for backend, so you can't put multiple users as different roles on a wordlist or put a user more than once
 8. Make validation for viewing wordlists, must be a user added as a contributor user or owner to view or practice
-9. Add honeypot
+
+9. Make it so that contributor can be assigned or contribute to a wordlist, but a user cannot be added as a contributor
+
+10. [x] Trying to fix the current issue with getting users and making sure only some users can be added to specific wordlists
+
+11. Need to make it so that user can insert audio with AWS
+12. Make it so that user registration gets email verification

@@ -1,5 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { createContext, useReducer } from "react";
 
 export const WordlistsContext = createContext();
 

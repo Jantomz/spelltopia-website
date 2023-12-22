@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import styles from "../styles/WordlistDashboard.module.css";
 
 import WordDetails from "../components/wordlist/WordDetails";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 import UserWordlistTool from "../components/user/UserWordlistTools";
@@ -45,6 +45,7 @@ export default function WordlistDashboard() {
         </button>
         <div className={styles.words}>
           <h1>{wordlist.title}</h1>
+          <div>{wordlist.visibility}</div>
           <h4>Owner: {wordlist.owner}</h4>
           <div>
             <h4>Contributors:</h4>

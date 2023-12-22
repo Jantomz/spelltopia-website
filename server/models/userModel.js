@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+const Token = require("./tokenModel");
+const crypto = require("crypto");
+const sendEmail = require("../utils/sendEmail");
 
 const Schema = mongoose.Schema;
 
@@ -26,6 +29,10 @@ const userSchema = new Schema({
   type: {
     type: String,
     required: true,
+  },
+  verified: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -68,6 +75,14 @@ userSchema.statics.signup = async function (
     type,
   });
 
+  const signupToken = await new Token({
+    user_id: user._id,
+    token: crypto.randomBytes(32).toString("hex"),
+  }).save();
+
+  const url = `${process.env.BASE_URL}/${user._id}/${signupToken.token}`;
+  await sendEmail(user.email, "Verify Email", url);
+
   return user;
 };
 
@@ -87,6 +102,22 @@ userSchema.statics.login = async function (email, password) {
 
   if (!match) {
     throw Error("Incorrect Password");
+  }
+
+  if (!user.verified) {
+    const token = await Token.findOne({ user_id: user._id });
+    if (!token) {
+      const signupToken = await new Token({
+        user_id: user._id,
+        token: crypto.randomBytes(32).toString("hex"),
+      }).save();
+
+      const url = `${process.env.BASE_URL}/${user._id}/${signupToken.token}`;
+      await sendEmail(user.email, "Verify Email", url);
+    }
+    return res
+      .status(400)
+      .send({ message: "An Email has been sent to verify your email" });
   }
 
   return user;

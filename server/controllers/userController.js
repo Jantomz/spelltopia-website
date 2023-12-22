@@ -3,6 +3,8 @@ const User = require("../models/userModel");
 
 const jwt = require("jsonwebtoken");
 
+const Token = require("../models/tokenModel");
+
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
 };
@@ -70,4 +72,32 @@ const getUsers = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, signupUser, getUser, getUsers };
+const verifyUser = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) {
+      return res.status(400).send({ message: "Invalid link" });
+    }
+
+    const token = await Token.findOne({
+      user_id: user._id,
+      token: req.params.token,
+    });
+    if (!token) {
+      return res.status(400).send({ message: "Invalid link" });
+    }
+
+    await User.findByIdAndUpdate({ _id: user._id }, { verified: true });
+
+    await Token.findOneAndDelete({
+      user_id: user._id,
+      token: req.params.token,
+    });
+
+    res.status(200).send({ message: "Email verified successfully" });
+  } catch (error) {
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+
+module.exports = { loginUser, signupUser, getUser, getUsers, verifyUser };

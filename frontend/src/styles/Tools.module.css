@@ -37,14 +37,14 @@
 }
 
 .cell {
-  width: 20em;
+  width: 15em;
   border: 1px dotted rgb(150, 150, 150);
   border-width: 0px 1px;
   padding: 0.5em;
 }
 
 .cellTitle {
-  width: 20em;
+  width: 15em;
   border: 1px dotted rgb(150, 150, 150);
   border-width: 0px 1px;
   padding: 0.5em;

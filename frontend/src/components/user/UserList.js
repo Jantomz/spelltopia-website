@@ -29,9 +29,7 @@ export default function UserList() {
     if (user) {
       fetchUsers();
     }
-  }, []);
-
-  console.log(users);
+  }, [dispatch, user]);
 
   return (
     <div className={styles.table}>

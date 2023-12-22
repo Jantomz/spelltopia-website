@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -11,9 +11,11 @@ import WordlistUserList from "../components/wordlist/WordlistUserList";
 import { useWordlistsContext } from "../hooks/useWordlistsContext";
 import { useUserContext } from "../hooks/useUserContext";
 
+let userEmails = [];
+
 export default function WordlistEdit() {
   const { wordlist, dispatch } = useWordlistsContext();
-  const { dispatch: userDispatch, users } = useUserContext();
+  const { users, dispatch: userDispatch } = useUserContext();
   const { id } = useParams();
   const { user } = useAuthContext();
   const navigate = useNavigate();
@@ -48,24 +50,56 @@ export default function WordlistEdit() {
   };
 
   const editWordlist = async () => {
-    const response = await fetch(
-      `https://spelltopia-website.onrender.com/api/wordlists/${id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json", // makes the content type specified as json, otherwise it would be undefined
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({ title }),
+    if (title) {
+      const response = await fetch(
+        `https://spelltopia-website.onrender.com/api/wordlists/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json", // makes the content type specified as json, otherwise it would be undefined
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify({ title }),
+        }
+      );
+
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: "SET_WORDLIST", payload: json });
       }
-    );
-
-    const json = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: "SET_WORDLIST", payload: json });
+    } else {
+      console.log("error, wordlist title empty");
     }
   };
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const userResponse = await fetch(
+        `https://spelltopia-website.onrender.com/api/user`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      const userJson = await userResponse.json();
+
+      if (userResponse.ok) {
+        userDispatch({ type: "SET_USERS", payload: userJson });
+
+        userEmails = [];
+        userJson?.forEach((u) => {
+          userEmails.push(u.email);
+        });
+      }
+    };
+
+    if (user) {
+      fetchUsers();
+    }
+  }, []);
 
   const fetchWordlist = async () => {
     const response = await fetch(
@@ -83,31 +117,17 @@ export default function WordlistEdit() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleUserSubmit = async (e) => {
     e.preventDefault();
 
-    const userResponse = await fetch(
-      `https://spelltopia-website.onrender.com/api/user`,
-      {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
-
-    const userJson = await userResponse.json();
-
-    if (userResponse.ok) {
-      userDispatch({ type: "SET_USERS", payload: userJson });
-    }
-
-    const userEmails = [];
-
-    users?.map((u) => {
-      userEmails.push(u.email);
-    });
-
-    if (!wordlist.user?.includes(email) && userEmails?.includes(email)) {
+    if (
+      !(
+        wordlist.user?.includes(email) ||
+        wordlist.contributor?.includes(email) ||
+        wordlist.owner?.includes(email)
+      ) &&
+      userEmails?.includes(email)
+    ) {
       // need to change this above, since the users object is the full object, not just the email
       const response = await fetch(
         `https://spelltopia-website.onrender.com/api/wordlists/${id}/user`,
@@ -130,7 +150,11 @@ export default function WordlistEdit() {
       }
     } else {
       setEmail("");
-      if (wordlist.user?.includes(email)) {
+      if (
+        wordlist.user?.includes(email) ||
+        wordlist.contributor?.includes(email) ||
+        wordlist.owner?.includes(email)
+      ) {
         setError("User is already added!");
       } else {
         setError("User does not exist");
@@ -159,6 +183,12 @@ export default function WordlistEdit() {
   if (wordlist) {
     return (
       <div className="container">
+        <button
+          className="back"
+          onClick={() => navigate(`/wordlist/dashboard/${id}`)}
+        >
+          Back
+        </button>
         <div className={styles.words}>
           {editingTitle ? (
             <h1>
@@ -179,6 +209,8 @@ export default function WordlistEdit() {
               <span className="material-symbols-outlined">edit</span>
             </h1>
           )}
+          <div>{wordlist.visibility}</div>
+
           <h4>Owner: {wordlist.owner}</h4>
           <div>
             <h4>Contributors:</h4>
@@ -195,7 +227,7 @@ export default function WordlistEdit() {
                 <WordlistUserList key={u} email={u}></WordlistUserList>
               ))}
               <li>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleUserSubmit}>
                   <input
                     value={email}
                     placeholder="add email"
@@ -209,15 +241,16 @@ export default function WordlistEdit() {
             </ul>
           </div>
 
-          {wordlist.words &&
-            wordlist.words.map((word) => (
-              <WordDetailsEdit key={word._id} word={word} />
-            ))}
+          {wordlist.words?.map((word) => (
+            <WordDetailsEdit key={word._id} word={word} />
+          ))}
           <WordForm></WordForm>
         </div>
-        <button onClick={handleDelete} className={styles.deleteBtn}>
-          Delete Wordlist
-        </button>
+        {user.email === wordlist.owner && (
+          <button onClick={handleDelete} className={styles.deleteBtn}>
+            Delete Wordlist
+          </button>
+        )}
       </div>
     );
   } else {
