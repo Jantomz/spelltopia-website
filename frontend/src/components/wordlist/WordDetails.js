@@ -7,7 +7,7 @@ export default function WordDetails({ word }) {
   const audio = new Audio(word.audio);
   const { user } = useAuthContext();
   const { id } = useParams();
-  const { dispatch, wordlist } = useWordlistsContext();
+  const { dispatch } = useWordlistsContext();
 
   const playAudio = () => {
     audio.play();
