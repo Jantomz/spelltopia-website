@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const catbox = require("node-catbox");
+
 const Wordlist = require("../models/wordlistModel");
 
 const catbox = require("node-catbox");
@@ -250,6 +252,7 @@ const postWord = async (req, res) => {
   } catch (err) {
     console.error(err); // -> error message from server
   }
+
 
   const word = {
     title,
