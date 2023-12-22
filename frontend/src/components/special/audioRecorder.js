@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+// import { Catbox } from "node-catbox";
 
 const mimeType = "audio/webm";
 
@@ -80,12 +81,12 @@ const AudioRecorder = () => {
           ) : null}
         </div>
         {audio ? (
-          <div className="audio-container">
-            <audio src={audio} controls></audio>
-            <a download href={audio}>
-              Download Recording
-            </a>
-          </div>
+          <>
+            <div className="audio-container">
+              <audio src={audio} controls></audio>
+            </div>
+            {/* <button onClick={saveRecording(audio)}>Save</button> */}
+          </>
         ) : null}
       </main>
     </div>

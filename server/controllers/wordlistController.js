@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const catbox = require("node-catbox");
+
 const Wordlist = require("../models/wordlistModel");
 
 const getAllWordlists = async (req, res) => {
@@ -234,6 +236,14 @@ const postWord = async (req, res) => {
     sentence,
     audio,
   } = req.body;
+
+  console.log(audio);
+
+  // const response = await catbox.uploadURL({
+  //   url: audio,
+  // });
+
+  // console.log(response);
 
   const word = {
     title,
