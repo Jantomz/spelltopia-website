@@ -29,11 +29,7 @@ export const useSignup = () => {
     }
 
     if (response.ok) {
-      // save user to local storage
-      localStorage.setItem("user", JSON.stringify(json));
-
-      //useAuthContext
-      dispatch({ type: "LOGIN", payload: json });
+      setError("Check your email to verify your account!");
 
       setIsLoading(false);
     }

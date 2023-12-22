@@ -1,18 +1,34 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function Verify() {
   const { token, id } = useParams();
+  let json = null;
 
   useEffect(() => {
     const verify = async () => {
-      await fetch(
+      const response = await fetch(
         `https://spelltopia-website.onrender.com/api/user/${id}/verify/${token}`
       );
+
+      if (response.ok) {
+        return await response.json();
+      }
     };
 
-    verify();
+    json = verify();
   }, []);
 
-  return <div>Email Verified</div>;
+  return (
+    <div>
+      {json ? (
+        <div>
+          Email Verified! Now you can <Link href="/login">Login</Link>
+        </div>
+      ) : (
+        <div>Verifying... Please Wait</div>
+      )}
+      ;
+    </div>
+  );
 }
