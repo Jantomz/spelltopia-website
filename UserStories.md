@@ -48,4 +48,4 @@
 10. [x] Trying to fix the current issue with getting users and making sure only some users can be added to specific wordlists
 
 11. Need to make it so that user can insert audio with AWS
-12. Make it so that user registration gets email verification
+12. [x] Make it so that user registration gets email verification
