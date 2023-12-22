@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
-const catbox = require("node-catbox");
-
 const Wordlist = require("../models/wordlistModel");
-
-const catbox = require("node-catbox");
 
 const getAllWordlists = async (req, res) => {
   const wordlists = await Wordlist.find({}).sort({ createdAt: -1 });
@@ -236,23 +232,8 @@ const postWord = async (req, res) => {
     etymology,
     pronunciation,
     sentence,
-    file,
+    audio,
   } = req.body;
-
-  let audio;
-
-  try {
-    const response = await catbox.uploadFile({
-      path: file,
-    });
-
-    console.log(response); // -> https://files.catbox.moe/XXXXX.ext
-
-    audio = response;
-  } catch (err) {
-    console.error(err); // -> error message from server
-  }
-
 
   const word = {
     title,

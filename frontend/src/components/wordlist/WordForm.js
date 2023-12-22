@@ -18,6 +18,7 @@ export default function WordForm() {
   const [partOfSpeech, setPartOfSpeech] = useState("");
   const [etymology, setEtymology] = useState("");
   const [sentence, setSentence] = useState("");
+  const [audio, setAudio] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
   const [error, setError] = useState(null);
   const { id } = useParams();
@@ -28,8 +29,6 @@ export default function WordForm() {
       return;
     }
 
-    const file = document.getElementById("audioFile").files[0];
-
     const word = {
       title,
       partOfSpeech,
@@ -37,7 +36,7 @@ export default function WordForm() {
       pronunciation,
       etymology,
       sentence,
-      file,
+      audio,
     };
 
     const response = await fetch(
@@ -68,6 +67,7 @@ export default function WordForm() {
       setDefinition("");
       setSentence("");
       setEtymology("");
+      setAudio("");
       setEmptyFields([]);
       dispatch({ type: "SET_WORDLIST", payload: json });
     }
@@ -175,10 +175,12 @@ export default function WordForm() {
               : styles.inputInfo
           }
         ></textarea>
-        <input
-          type="file"
-          id="audioFile"
+        <textarea
+          type="text"
+          placeholder="audio link"
+          value={audio}
           onChange={(e) => {
+            setAudio(e.target.value);
             const index = emptyFields.indexOf("audio");
             removeEmptyField(index);
           }}
@@ -187,7 +189,7 @@ export default function WordForm() {
               ? styles.inputInfoError
               : styles.inputInfo
           }
-        ></input>
+        ></textarea>
         <AudioRecorder />
       </form>
       {error && <div className={styleForm.error}>{error}</div>}
