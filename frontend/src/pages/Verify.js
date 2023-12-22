@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 export default function Verify() {
   const { token, id } = useParams();
-  let json = null;
+  const [verified, setVerified] = useState(false);
 
   useEffect(() => {
     const verify = async () => {
@@ -12,16 +12,16 @@ export default function Verify() {
       );
 
       if (response.ok) {
-        return await response.json();
+        setVerified(true);
       }
     };
 
-    json = verify();
+    verify();
   }, []);
 
   return (
     <div>
-      {json ? (
+      {verified ? (
         <div>
           Email Verified! Now you can <Link href="/login">Login</Link>
         </div>
