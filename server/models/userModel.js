@@ -115,9 +115,7 @@ userSchema.statics.login = async function (email, password) {
       const url = `${process.env.BASE_URL}/${user._id}/${signupToken.token}`;
       await sendEmail(user.email, "Verify Email", url);
     }
-    return res
-      .status(400)
-      .send({ message: "An Email has been sent to verify your email" });
+    throw Error("An Email has been sent to verify your email");
   }
 
   return user;

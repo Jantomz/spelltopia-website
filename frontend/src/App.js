@@ -64,10 +64,7 @@ function App() {
               user?.type === "admin" ? <UserList /> : <Navigate to="/login" />
             }
           ></Route>
-          <Route
-            path="/verify/:id/:token"
-            element={user ? <Navigate to="/" /> : <Verify />}
-          ></Route>
+          <Route path="/verify/:id/:token" element={<Verify />}></Route>
         </Routes>
       )}
     </BrowserRouter>
