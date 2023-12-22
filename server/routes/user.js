@@ -9,6 +9,7 @@ const {
   signupUser,
   getUser,
   getUsers,
+  verifyUser,
 } = require("../controllers/userController");
 
 // login route
@@ -20,6 +21,9 @@ router.post("/signup", signupUser);
 
 // GET user
 router.get("/:email", getUser);
+
+// verify user
+router.get("/:id/verify/:token", verifyUser);
 
 const requireAuth = require("../middleware/requireAuth");
 
