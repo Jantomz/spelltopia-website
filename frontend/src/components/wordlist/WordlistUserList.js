@@ -7,7 +7,7 @@ import { useWordlistsContext } from "../../hooks/useWordlistsContext";
 export default function WordlistUserList({ email }) {
   const { id } = useParams();
   const { user } = useAuthContext();
-  const { dispatch } = useWordlistsContext();
+  const { dispatch, wordlist } = useWordlistsContext();
 
   const handleDelete = async () => {
     const response = await fetch(

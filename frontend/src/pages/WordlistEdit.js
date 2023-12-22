@@ -11,6 +11,8 @@ import WordlistUserList from "../components/wordlist/WordlistUserList";
 import { useWordlistsContext } from "../hooks/useWordlistsContext";
 import { useUserContext } from "../hooks/useUserContext";
 
+let userEmails = [];
+
 export default function WordlistEdit() {
   const { wordlist, dispatch } = useWordlistsContext();
   const { users, dispatch: userDispatch } = useUserContext();
@@ -22,7 +24,6 @@ export default function WordlistEdit() {
   const [isFocused, setIsFocused] = useState(false);
   const [title, setTitle] = useState();
   const [error, setError] = useState(null);
-  const userEmails = [];
 
   const editTrue = () => {
     setEditingTitle(true);
@@ -87,6 +88,11 @@ export default function WordlistEdit() {
 
       if (userResponse.ok) {
         userDispatch({ type: "SET_USERS", payload: userJson });
+
+        userEmails = [];
+        userJson?.forEach((u) => {
+          userEmails.push(u.email);
+        });
       }
     };
 
@@ -114,11 +120,14 @@ export default function WordlistEdit() {
   const handleUserSubmit = async (e) => {
     e.preventDefault();
 
-    users?.map((u) => {
-      userEmails.push(u.email);
-    });
-
-    if (!wordlist.user?.includes(email) && userEmails?.includes(email)) {
+    if (
+      !(
+        wordlist.user?.includes(email) ||
+        wordlist.contributor?.includes(email) ||
+        wordlist.owner?.includes(email)
+      ) &&
+      userEmails?.includes(email)
+    ) {
       // need to change this above, since the users object is the full object, not just the email
       const response = await fetch(
         `https://spelltopia-website.onrender.com/api/wordlists/${id}/user`,
@@ -141,7 +150,11 @@ export default function WordlistEdit() {
       }
     } else {
       setEmail("");
-      if (wordlist.user?.includes(email)) {
+      if (
+        wordlist.user?.includes(email) ||
+        wordlist.contributor?.includes(email) ||
+        wordlist.owner?.includes(email)
+      ) {
         setError("User is already added!");
       } else {
         setError("User does not exist");
@@ -196,6 +209,8 @@ export default function WordlistEdit() {
               <span className="material-symbols-outlined">edit</span>
             </h1>
           )}
+          <div>{wordlist.visibility}</div>
+
           <h4>Owner: {wordlist.owner}</h4>
           <div>
             <h4>Contributors:</h4>
@@ -231,9 +246,11 @@ export default function WordlistEdit() {
           ))}
           <WordForm></WordForm>
         </div>
-        <button onClick={handleDelete} className={styles.deleteBtn}>
-          Delete Wordlist
-        </button>
+        {user.email === wordlist.owner && (
+          <button onClick={handleDelete} className={styles.deleteBtn}>
+            Delete Wordlist
+          </button>
+        )}
       </div>
     );
   } else {

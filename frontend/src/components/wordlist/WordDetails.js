@@ -7,7 +7,7 @@ export default function WordDetails({ word }) {
   const audio = new Audio(word.audio);
   const { user } = useAuthContext();
   const { id } = useParams();
-  const { dispatch } = useWordlistsContext();
+  const { dispatch, wordlist } = useWordlistsContext();
 
   const playAudio = () => {
     audio.play();
@@ -34,9 +34,27 @@ export default function WordDetails({ word }) {
     <div className={styles.word}>
       <div className={styles.hbox}>
         <div>
-          <h1 className={styles.title}>
+          <h1
+            className={
+              !word.definition && !word.etymology && !word.sentence
+                ? styles.titleAlone
+                : styles.title
+            }
+          >
             {word.title}
-            <span className={styles.info}>{word.partOfSpeech}</span>
+            {word.partOfSpeech ? (
+              <span className={styles.info}>{word.partOfSpeech}</span>
+            ) : (
+              <h4 className={styles.info}>
+                {word.pronunciation}
+                <span
+                  className="material-symbols-outlined audio-symbol"
+                  onClick={playAudio}
+                >
+                  volume_up
+                </span>
+              </h4>
+            )}
           </h1>
         </div>
         {user.type !== "user" && window.location.href.includes("edit") && (
@@ -45,18 +63,21 @@ export default function WordDetails({ word }) {
           </i>
         )}
       </div>
-      <h4 className={styles.info}>
-        {word.pronunciation}
-        <span
-          className="material-symbols-outlined audio-symbol"
-          onClick={playAudio}
-        >
-          volume_up
-        </span>
-      </h4>
-      <h4 className={styles.info}>{word.definition}</h4>
-      <h4 className={styles.info}>{word.etymology}</h4>
-      <h4 className={styles.info}>{word.sentence}</h4>
+      {word.partOfSpeech && (
+        <h4 className={styles.info}>
+          {word.pronunciation}
+          <span
+            className="material-symbols-outlined audio-symbol"
+            onClick={playAudio}
+          >
+            volume_up
+          </span>
+        </h4>
+      )}
+
+      {word.definition && <h4 className={styles.info}>{word.definition}</h4>}
+      {word.etymology && <h4 className={styles.info}>{word.etymology}</h4>}
+      {word.sentence && <h4 className={styles.info}>{word.sentence}</h4>}
     </div>
   );
 }

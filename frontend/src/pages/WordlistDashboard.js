@@ -45,6 +45,7 @@ export default function WordlistDashboard() {
         </button>
         <div className={styles.words}>
           <h1>{wordlist.title}</h1>
+          <div>{wordlist.visibility}</div>
           <h4>Owner: {wordlist.owner}</h4>
           <div>
             <h4>Contributors:</h4>

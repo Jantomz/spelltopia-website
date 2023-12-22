@@ -27,6 +27,10 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  verified: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 // static signup method
@@ -66,6 +70,7 @@ userSchema.statics.signup = async function (
     email,
     password: hash,
     type,
+    verified: false,
   });
 
   return user;
@@ -87,6 +92,10 @@ userSchema.statics.login = async function (email, password) {
 
   if (!match) {
     throw Error("Incorrect Password");
+  }
+
+  if (!user.verified) {
+    throw Error("Your account is not verified! Check your email");
   }
 
   return user;
