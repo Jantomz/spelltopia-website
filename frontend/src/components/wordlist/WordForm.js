@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styles from "../../styles/WordDetails.module.css";
 import styleForm from "../../styles/Forms.module.css";
 
@@ -190,6 +190,9 @@ export default function WordForm() {
               : styles.inputInfo
           }
         ></textarea>
+        <a href="https://catbox.moe/" target="_blank">
+          Go To Catbox to upload the file and paste the link as the "Audio Link"
+        </a>
         <AudioRecorder />
       </form>
       {error && <div className={styleForm.error}>{error}</div>}
