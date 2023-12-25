@@ -60,7 +60,7 @@ export default function WordForm() {
 
     if (response.ok) {
       setError(null);
-      console.log("New Word Added", json);
+      // console.log("New Word Added", json);
       setTitle("");
       setPronunciation("");
       setPartOfSpeech("");
@@ -190,12 +190,13 @@ export default function WordForm() {
               : styles.inputInfo
           }
         ></textarea>
+        {error && <div className={styleForm.error}>{error}</div>}
+
         <a href="https://catbox.moe/" target="_blank">
           Go To Catbox to upload the file and paste the link as the "Audio Link"
         </a>
         <AudioRecorder />
       </form>
-      {error && <div className={styleForm.error}>{error}</div>}
     </div>
   );
 }
