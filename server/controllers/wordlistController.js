@@ -225,6 +225,7 @@ const getWord = async (req, res) => {
 
 const postWord = async (req, res) => {
   const { id } = req.params;
+  const emptyFields = [];
   const {
     title,
     definition,
@@ -234,6 +235,13 @@ const postWord = async (req, res) => {
     sentence,
     audio,
   } = req.body;
+
+  if (!title) {
+    emptyFields.push(title);
+  }
+  if (!audio) {
+    emptyFields.push(audio);
+  }
 
   const word = {
     title,
@@ -260,7 +268,7 @@ const postWord = async (req, res) => {
     return res.status(404).json({ error: "No such wordlist" });
   }
 
-  res.status(200).json(wordlist);
+  res.status(200).json(wordlist, emptyFields);
 };
 
 const deleteWord = async (req, res) => {

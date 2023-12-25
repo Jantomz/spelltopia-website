@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-// import { Catbox } from "node-catbox";
 
 const mimeType = "audio/mp3";
 
@@ -60,7 +59,7 @@ const AudioRecorder = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Audio Recorder</h2>
       <main>
         <div className="audio-controls">
@@ -84,8 +83,10 @@ const AudioRecorder = () => {
           <>
             <div className="audio-container">
               <audio src={audio} controls></audio>
+              <a download href={audio}>
+                Download Recording
+              </a>
             </div>
-            {/* <button onClick={saveRecording(audio)}>Save</button> */}
           </>
         ) : null}
       </main>
