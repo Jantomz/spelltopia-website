@@ -10,13 +10,14 @@ export default function UserWordlistTool() {
   const { wordlist } = useWordlistsContext();
   const { user } = useAuthContext();
 
+  // will get broken if google drive embeds haven't loaded yet or you click too fast on the practice button
   const handleClick = () => {
     let startWord = prompt(
       "What word would you like to start at? (Leave blank to continue where you left off)"
     );
 
     for (let i = 0; i < wordlist.words.length; i++) {
-      if (startWord.toUpperCase() === wordlist.words[i].title.toUpperCase()) {
+      if (startWord?.toUpperCase() === wordlist.words[i].title?.toUpperCase()) {
         localStorage.setItem(`${id}-count`, i + 1);
         break;
       }
