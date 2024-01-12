@@ -36,13 +36,16 @@ export default function WordPractice({ words }) {
 
     let count = localStorage.getItem(`${id}-count`);
 
-    if (spelling === word.title && count < words.length) {
+    if (
+      spelling.toUpperCase() === word.title.toUpperCase() &&
+      count < words.length
+    ) {
       count++;
       localStorage.setItem(`${id}-count`, count);
       setWrong(null);
       setWord(words[count - 1]);
       setSpelling("");
-    } else if (spelling === word.title) {
+    } else if (spelling.toUpperCase() === word.title.toUpperCase()) {
       setWrong("Done Wordlist");
     } else {
       setWrong("That is Incorrect");

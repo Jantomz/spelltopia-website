@@ -4,14 +4,14 @@ import { useWordlistsContext } from "../../hooks/useWordlistsContext";
 import { useParams } from "react-router-dom";
 
 export default function WordDetails({ word }) {
-  const audio = new Audio(word.audio);
+  // const audio = new Audio(word.audio);
   const { user } = useAuthContext();
   const { id } = useParams();
   const { dispatch } = useWordlistsContext();
 
-  const playAudio = () => {
-    audio.play();
-  };
+  // const playAudio = () => {
+  //   audio.play();
+  // };
 
   const handleDelete = async () => {
     const response = await fetch(
@@ -47,12 +47,21 @@ export default function WordDetails({ word }) {
             ) : (
               <h4 className={styles.info}>
                 {word.pronunciation}
-                <span
+                // Upload is temporarily fixed with iframe from google drive
+                {/* <span
                   className="material-symbols-outlined audio-symbol"
                   onClick={playAudio}
                 >
                   volume_up
-                </span>
+                </span> */}
+                <iframe
+                  height="50"
+                  width="300"
+                  src={
+                    word.audio.substring(0, word.audio.indexOf("/view")) +
+                    "/preview"
+                  }
+                ></iframe>
               </h4>
             )}
           </h1>
@@ -66,12 +75,20 @@ export default function WordDetails({ word }) {
       {word.partOfSpeech && (
         <h4 className={styles.info}>
           {word.pronunciation}
-          <span
+          // Upload is temporarily fixed with iframe from google drive
+          {/* <span
             className="material-symbols-outlined audio-symbol"
             onClick={playAudio}
           >
             volume_up
-          </span>
+          </span> */}
+          <iframe
+            height="50"
+            width="300"
+            src={
+              word.audio.substring(0, word.audio.indexOf("/view")) + "/preview"
+            }
+          ></iframe>
         </h4>
       )}
 
