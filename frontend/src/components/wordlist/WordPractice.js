@@ -13,7 +13,7 @@ export default function WordPractice({ words }) {
   useEffect(() => {
     let count = localStorage.getItem(`${id}-count`);
 
-    if (!count) {
+    if (!count || count > words.length) {
       localStorage.setItem(`${id}-count`, 1);
     }
 
