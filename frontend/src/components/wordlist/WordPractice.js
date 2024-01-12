@@ -22,6 +22,7 @@ export default function WordPractice({ words }) {
     setWord(words[count - 1]);
   }, [id, words]);
 
+  // Currently fixed with google drive embed
   const playAudio = () => {
     const audio = new Audio(word.audio);
     audio.play();
@@ -37,7 +38,7 @@ export default function WordPractice({ words }) {
     let count = localStorage.getItem(`${id}-count`);
 
     if (
-      spelling.toUpperCase() === word.title.toUpperCase() &&
+      spelling?.toUpperCase() === word.title?.toUpperCase() &&
       count < words.length
     ) {
       count++;
@@ -45,7 +46,7 @@ export default function WordPractice({ words }) {
       setWrong(null);
       setWord(words[count - 1]);
       setSpelling("");
-    } else if (spelling.toUpperCase() === word.title.toUpperCase()) {
+    } else if (spelling?.toUpperCase() === word.title?.toUpperCase()) {
       setWrong("Done Wordlist");
     } else {
       setWrong("That is Incorrect");
@@ -67,12 +68,20 @@ export default function WordPractice({ words }) {
   if (word) {
     return (
       <div className={styles.card}>
-        <span
+        {/* Audio temporarily fixed with google drive embed}
+        {/* <span
           className="material-symbols-outlined audio-symbol"
           onClick={playAudio}
         >
           volume_up
-        </span>
+        </span> */}
+        <iframe
+          height="50"
+          width="300"
+          src={
+            word.audio.substring(0, word.audio.indexOf("/view")) + "/preview"
+          }
+        ></iframe>
         <h4>{word?.partOfSpeech}</h4>
         <h4>{word?.definition}</h4>
         <h4>{word?.etymology}</h4>
