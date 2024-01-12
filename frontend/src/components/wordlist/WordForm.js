@@ -191,7 +191,7 @@ export default function WordForm() {
           }
         ></textarea>
         {error && <div className={styleForm.error}>{error}</div>}
-        // Upload is temporarily fixed with iframe from google drive
+        {/* Upload is temporarily fixed with iframe from google drive*/}
         {/* <a href="https://catbox.moe/" target="_blank">
           Go To Catbox to upload the file and paste the link as the "Audio Link"
         </a>

@@ -47,7 +47,7 @@ export default function WordDetails({ word }) {
             ) : (
               <h4 className={styles.info}>
                 {word.pronunciation}
-                // Upload is temporarily fixed with iframe from google drive
+                {/* Upload is temporarily fixed with iframe from google drive*/}
                 {/* <span
                   className="material-symbols-outlined audio-symbol"
                   onClick={playAudio}
@@ -75,7 +75,7 @@ export default function WordDetails({ word }) {
       {word.partOfSpeech && (
         <h4 className={styles.info}>
           {word.pronunciation}
-          // Upload is temporarily fixed with iframe from google drive
+          {/* Upload is temporarily fixed with iframe from google drive*/}
           {/* <span
             className="material-symbols-outlined audio-symbol"
             onClick={playAudio}
