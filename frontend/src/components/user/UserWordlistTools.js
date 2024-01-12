@@ -11,6 +11,17 @@ export default function UserWordlistTool() {
   const { user } = useAuthContext();
 
   const handleClick = () => {
+    let startWord = prompt(
+      "What word would you like to start at? (Leave blank to continue where you left off)"
+    );
+
+    for (let i = 0; i < wordlist.words.length; i++) {
+      if (startWord.toUpperCase() === wordlist.words[i].title.toUpperCase()) {
+        localStorage.setItem(`${id}-count`, i + 1);
+        break;
+      }
+    }
+
     navigate(`/practice/${id}`);
     const count = localStorage.getItem(`${id}-count`);
 

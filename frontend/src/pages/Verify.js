@@ -23,7 +23,8 @@ export default function Verify() {
     <div>
       {verified ? (
         <div>
-          Email Verified! Now you can <Link href="/login">Login</Link>
+          Email Verified! Now you can
+          <Link href="https://spelltopia/login">Login</Link>
         </div>
       ) : (
         <div>Verifying... Please Wait</div>

@@ -162,21 +162,27 @@ export default function WordlistEdit() {
     }
   };
   const handleDelete = async () => {
-    const response = await fetch(
-      `https://spelltopia-website.onrender.com/api/wordlists/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
+    let confirmation = prompt(
+      'Type "Delete Wordlist" to confirm wordlist deletion'
     );
 
-    const json = await response.json();
+    if (confirmation === "Delete Wordlist") {
+      const response = await fetch(
+        `https://spelltopia-website.onrender.com/api/wordlists/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
 
-    if (response.ok) {
-      dispatch({ type: "DELETE_WORDLIST", payload: json });
-      navigate("/");
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: "DELETE_WORDLIST", payload: json });
+        navigate("/");
+      }
     }
   };
 
