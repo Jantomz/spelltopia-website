@@ -2,16 +2,22 @@ import styles from "../../styles/WordDetails.module.css";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useWordlistsContext } from "../../hooks/useWordlistsContext";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 export default function WordDetails({ word }) {
   // const audio = new Audio(word.audio);
   const { user } = useAuthContext();
   const { id } = useParams();
   const { dispatch } = useWordlistsContext();
+  const [showAudio, setShowAudio] = useState(false);
 
   // const playAudio = () => {
   //   audio.play();
   // };
+
+  const loadAudio = () => {
+    setShowAudio(true);
+  };
 
   const handleDelete = async () => {
     const response = await fetch(
@@ -48,20 +54,24 @@ export default function WordDetails({ word }) {
               <h4 className={styles.info}>
                 {word.pronunciation}
                 {/* Upload is temporarily fixed with iframe from google drive*/}
-                {/* <span
-                  className="material-symbols-outlined audio-symbol"
-                  onClick={playAudio}
-                >
-                  volume_up
-                </span> */}
-                <iframe
-                  height="50"
-                  width="300"
-                  src={
-                    word.audio.substring(0, word.audio.indexOf("/view")) +
-                    "/preview"
-                  }
-                ></iframe>
+                {showAudio ? (
+                  <iframe
+                    height="50"
+                    width="300"
+                    src={
+                      word.audio.substring(0, word.audio.indexOf("/view")) +
+                      "/preview"
+                    }
+                  ></iframe>
+                ) : (
+                  <span
+                    className="material-symbols-outlined audio-symbol"
+                    // onClick={playAudio}
+                    onClick={loadAudio}
+                  >
+                    volume_up
+                  </span>
+                )}
               </h4>
             )}
           </h1>
@@ -76,19 +86,24 @@ export default function WordDetails({ word }) {
         <h4 className={styles.info}>
           {word.pronunciation}
           {/* Upload is temporarily fixed with iframe from google drive*/}
-          {/* <span
-            className="material-symbols-outlined audio-symbol"
-            onClick={playAudio}
-          >
-            volume_up
-          </span> */}
-          <iframe
-            height="50"
-            width="300"
-            src={
-              word.audio.substring(0, word.audio.indexOf("/view")) + "/preview"
-            }
-          ></iframe>
+          {showAudio ? (
+            <iframe
+              height="50"
+              width="300"
+              src={
+                word.audio.substring(0, word.audio.indexOf("/view")) +
+                "/preview"
+              }
+            ></iframe>
+          ) : (
+            <span
+              className="material-symbols-outlined audio-symbol"
+              // onClick={playAudio}
+              onClick={loadAudio}
+            >
+              volume_up
+            </span>
+          )}
         </h4>
       )}
 
