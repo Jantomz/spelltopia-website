@@ -75,13 +75,19 @@ export default function WordPractice({ words }) {
         >
           volume_up
         </span> */}
-        <iframe
-          height="50"
-          width="300"
-          src={
-            word.audio.substring(0, word.audio.indexOf("/view")) + "/preview"
-          }
-        ></iframe>
+        <div className={styles.audioContainer}>
+          <iframe
+            title="audio-practice"
+            src={
+              word.audio.substring(0, word.audio.indexOf("/view")) + "/preview"
+            }
+            height="400"
+            style={{
+              marginTop: -370 + "px",
+              marginLeft: -10 + "px",
+            }}
+          ></iframe>
+        </div>
         <h4>{word?.partOfSpeech}</h4>
         <h4>{word?.definition}</h4>
         <h4>{word?.etymology}</h4>
