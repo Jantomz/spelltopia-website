@@ -108,3 +108,9 @@
   font-size: 50px;
   cursor: pointer;
 }
+
+.audioContainer {
+  overflow: hidden;
+  margin: 15px auto;
+  max-width: 736px;
+}

@@ -55,14 +55,20 @@ export default function WordDetails({ word }) {
                 {word.pronunciation}
                 {/* Upload is temporarily fixed with iframe from google drive*/}
                 {showAudio ? (
-                  <iframe
-                    height="50"
-                    width="300"
-                    src={
-                      word.audio.substring(0, word.audio.indexOf("/view")) +
-                      "/preview"
-                    }
-                  ></iframe>
+                  <div className={styles.audioContainer}>
+                    <iframe
+                      title="audio-main"
+                      src={
+                        word.audio.substring(0, word.audio.indexOf("/view")) +
+                        "/preview"
+                      }
+                      height="400"
+                      style={{
+                        marginTop: -370 + "px",
+                        marginLeft: -10 + "px",
+                      }}
+                    ></iframe>
+                  </div>
                 ) : (
                   <span
                     className="material-symbols-outlined audio-symbol"
@@ -87,14 +93,20 @@ export default function WordDetails({ word }) {
           {word.pronunciation}
           {/* Upload is temporarily fixed with iframe from google drive*/}
           {showAudio ? (
-            <iframe
-              height="50"
-              width="300"
-              src={
-                word.audio.substring(0, word.audio.indexOf("/view")) +
-                "/preview"
-              }
-            ></iframe>
+            <div className={styles.audioContainer}>
+              <iframe
+                title="audio-secondary"
+                src={
+                  word.audio.substring(0, word.audio.indexOf("/view")) +
+                  "/preview"
+                }
+                height="400"
+                style={{
+                  marginTop: -370 + "px",
+                  marginLeft: -10 + "px",
+                }}
+              ></iframe>
+            </div>
           ) : (
             <span
               className="material-symbols-outlined audio-symbol"
